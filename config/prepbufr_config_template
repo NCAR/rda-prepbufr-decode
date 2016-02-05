@@ -1,0 +1,17 @@
+# Brief description of prepbufr_config:
+
+LATS 30 -30   			# Enter lats from N to S (i.e. 90 -90) 
+LONS 190 270			# Enter lons from 0 to 360
+SAID KMSP  71223 72224 79833    # Enter station id's.  If using a 4 letter METAR code, add a space on the end of the id.  Use of stations will override lat/lon selections.
+PARM P Q T Z U V		# Enter parameter to be selected 
+TYPE ADPUPA AIRCAR AIRCFT SATWND PROFLR VADWND ADPSFC SFCSHP SPSSMI QKSWND RASSDA WDSATR ASCATW  #Choose data type.  All will be used if no type(s) is selected.
+
+
+Once a prepbufr_config file has been created in the directory of execution, 
+the decoder can be executed using the following command structure:
+
+readpb_config.x filename filedate (i.e. readpb_config.x /glade/data02/dsszone/ds337.0/little_endian/prepbufr.gdas.2005061400.wo40.le 2005061400)
+The resulting output file will be written to the directory of execution.
+
+# For a description of PREPBUFR Mnemonics, see:
+http://www.emc.ncep.noaa.gov/mmb/data_processing/prepbufr.doc/table_1.htm
