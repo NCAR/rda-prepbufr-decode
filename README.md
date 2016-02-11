@@ -30,8 +30,7 @@ expected that the data at the top of the stack are of
 the highest quality. 
  
  
-Prompt commands to get desired tar file (YYMM.prepqmDDDD) off of the Mass Store
-System and into a usable format:
+Prompt commands to get desired tar file (YYMM.prepqmDDDD) off of the Mass Store System and into a usable format:
 =================================================================================
 
 msread -fBI localfilename /DSS/AXXXXX
