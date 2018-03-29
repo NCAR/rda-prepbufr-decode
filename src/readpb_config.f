@@ -219,7 +219,7 @@ c     + at level/stack index = ",lv,jj
      +                  F6.1, I4, 1X, A2, 7(1X,F8.1) )' )
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
-     +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,6)
+     +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
 
                   count=1
                   DO mm = 1, 200
@@ -297,7 +297,7 @@ c     + at level/stack index = ",lv,jj
      +                  F6.1, I4, 1X, A2, 7(1X,F8.1) )' )
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
-     +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,6)
+     +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
 
                   count=1
                   DO mm = 1, 200
@@ -369,7 +369,7 @@ c     + at level/stack index = ",lv,jj
      +              F6.1, I4, 1X, A2, 7(1X,F8.1) )' )
      +              subset(1:6),idatec(1:8),idatec(9:10),
      +              ( hdr (ii), ii = 1, 8 ),
-     +              lv, var (kk), ( evns ( ii, lv, jj, kk ),ii=1,6)
+     +              lv, var (kk), ( evns ( ii, lv, jj, kk ),ii=1,8)
 
                     count=1
                     DO mm = 1, 200
@@ -429,16 +429,23 @@ C*      The 4-D array of data, EVNS ( ii, lv, jj, kk ), is indexed
 C*      as follows:
 C*
 C*      "ii" indexes the event data types; these consist of:
-C*          1) OBservation
-C*          2) Quality Mark
-C*          3) Program Code
-C*          4) Reason Code
-C*          5) ForeCast value
-C*          6) ANalysed value
-C*          7) office note CATegory
+C*          1) OBservation        (e.g., POB, ZOB, UOB, VOB, TOB, QOB, PWO)
+C*          2) Quality Mark       (e.g., PQM, ZRM, WQM, TQM, QQM, PWQ)
+C*          3) Program Code       (e.g., PPC, ZPC, WPC, TPC, QPC, PWP)
+C*          4) Reason Code        (e.g., PRC, ZRC, WRC, TRC, QRC, PWR)
+C*          5) ForeCast value     (e.g., PFC, ZFC, UFC, VFC, TFC, QFC, PWF)
+C*          6) ANalysed value     (e.g., PAN, ZAN, UAN, VAN, TAN, QAN, PWA)
+C*          7) Observation Error  (e.g., POE, ZOE, WOE, TOE, QOE, PWO)
+C*          8) PREPBUFR data level category (CAT)
 C*      "lv" indexes the levels of the report
 C*      "jj" indexes the event stacks
-C*      "kk" indexes the variable types (p,q,t,z,u,v)
+C*      "kk" indexes the variable types
+C           1) Pressure
+C           2) Specific humidity
+C           3) Temperature
+C           4) Height
+C           5) U-component wind
+C           6) V-component wind
 C*
 C*      Note that the structure of this array is identical to one
 C*      returned from UFBEVN, with an additional (4th) dimension to
@@ -462,12 +469,12 @@ C*
         DATA head  / 'DHR SID XOB YOB ELV TYP T29 ITP' /
 C*
 
-        DATA ostr / 'POB PQM PPC PRC PFC CAT',
-     +            'QOB QQM QPC QRC QFC CAT',
-     +            'TOB TQM TPC TRC TFC CAT',
-     +            'ZOB ZQM ZPC ZRC ZFC CAT',
-     +            'UOB WQM WPC WRC UFC CAT',
-     +            'VOB WQM WPC WRC VFC CAT'  /
+        DATA ostr / 'POB PQM PPC PRC PFC PAN POE CAT',
+     +              'QOB QQM QPC QRC QFC QAN QOE CAT',
+     +              'TOB TQM TPC TRC TFC TAN TOE CAT',
+     +              'ZOB ZQM ZPC ZRC ZFC ZAN ZOE CAT',
+     +              'UOB WQM WPC WRC UFC UAN WOE CAT',
+     +              'VOB WQM WPC WRC VFC VAN WOE CAT'  /
 C*
         REAL*8          hdr2 ( MXR8PM ),
      +                  evns2 ( MXR8PM, MXR8LV, MXR8VN, MXR8VT )
