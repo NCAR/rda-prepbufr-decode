@@ -255,6 +255,8 @@ c-----7---------------------------------------------------------------72
 c     Longitude/latitude region subsetting filter
 
         if(lon1 .lt. lon2) then 
+          print*,"(2) lon1 < lon2 subsetting"
+          print*,"lon1, lon2 = ",lon1,lon2
           if ((hdr(3) .ge. lon1) .and. (hdr(3) .le. lon2)) then 
             if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then 
 c              print *,"got here",subset(1:6)
@@ -331,6 +333,9 @@ c-----7---------------------------------------------------------------72
           end if  ! End if (hdr(3) >= lon1) and (hdr(3) <= lon2)
 
         else  ! Case lon1 > lon2
+
+          print*,"(3) lon1 > lon2 subsetting"
+          print*,"lon1, lon2 = ",lon1,lon2
 
           if ((hdr(3) .ge. lon1) .or. (hdr(3) .le. lon2)) then
             if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then
