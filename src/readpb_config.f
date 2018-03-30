@@ -114,7 +114,7 @@ C*    Print the HDR data for this station report.
      +    'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
       WRITE (UNIT=12, FMT=15)
   15  FORMAT ("#", 162("-"))
-  20  FORMAT ("#",a5,a9,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a4,8a9)
+  20  FORMAT ("#",a5,a9,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
 
 C
 C*   Get the next station report from the input file.
@@ -395,7 +395,7 @@ C
         
 C*    Format specifier for outstg
   500 FORMAT (A6,1x,a8,1x,a2,1x, F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,
-     + 1X, F7.1, 1X, F6.1, I4, 1X, A8, 8(1X,F8.1))
+     + 1X, F7.1, 1X, F6.1, I4, 1X, A5, 8(1X,F8.1))
 C* 
         STOP
         END
