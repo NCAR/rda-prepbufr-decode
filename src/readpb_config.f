@@ -207,7 +207,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  WRITE (UNIT = outstg, 1000)
+                  WRITE (UNIT = outstg, 500)
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
      +                  lv, var(kk), 
@@ -283,7 +283,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  WRITE (UNIT = outstg, 1000)
+                  WRITE (UNIT = outstg, 500)
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
      +                  lv, var(kk), 
@@ -353,7 +353,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  WRITE (UNIT = outstg, 1000)
+                  WRITE (UNIT = outstg, 500)
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
      +                  lv, var(kk), 
@@ -393,7 +393,7 @@ C
             GO TO 10
         END IF
         
- 1000  FORMAT (A6,1x,a8,1x,a2,1x, F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,
+  500 FORMAT (A6,1x,a8,1x,a2,1x, F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,
      + 1X, F7.1, 1X, F6.1, I4, 1X, A8, 8(1X,F10.1))
 C* 
         STOP
