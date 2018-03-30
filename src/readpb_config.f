@@ -216,19 +216,14 @@ c     + at level/stack index = ",lv,jj
                   count=1
                   DO mm = 1, 200
                     IF (outstg (mm:mm) .eq. '*') THEN
-c                      outstg (mm:mm) = ' '
                       outstg (mm:mm) = 'm'
-                      if(mm .ge. 89) then
+                      if(mm .ge. 93) then
                         count=count+1
                       end if
                     END IF
                   END DO
                       
-c                  IF  ( outstg (90:154) .ne. ' ' )  THEN
-c                    WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
-c                  ENDIF
-
-                  if (count .lt. 41) then
+                  if (count .lt. 64) then
                     WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                   endif
                 END DO  ! End jj = 1, MXR8VN loop
@@ -292,19 +287,14 @@ c     + at level/stack index = ",lv,jj
                   count=1
                   DO mm = 1, 200
                     IF (outstg (mm:mm) .eq. '*') THEN
-c                      outstg (mm:mm) = ' '
                       outstg (mm:mm) = 'm'
-                      if(mm .ge. 89) then
+                      if(mm .ge. 93) then
                         count=count+1
                       end if
                     END IF
                   END DO
                       
-c                  IF  ( outstg (90:154) .ne. ' ' )  THEN
-c                    WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
-c                  ENDIF
-
-                  if (count .lt. 41) then
+                  if (count .lt. 64) then
                     WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                   endif
                 END DO  ! End jj = 1, MXR8VN loop
@@ -360,22 +350,19 @@ c     + at level/stack index = ",lv,jj
      +                  (evns(ii,lv,jj,kk),ii=1,8)
 
                     count=1
-                    DO mm = 1, 200
-                      IF  ( outstg (mm:mm) .eq. '*' )  THEN
-c                       outstg (mm:mm) = ' '
-                        outstg (mm:mm) = 'm'
-                        if(mm .ge. 89) then
-                          count=count+1
-                        end if
-                      END IF
-                    END DO
-c                   IF  ( outstg (90:154) .ne. ' ' )  THEN
-c                     WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
-c                   ENDIF
-                    if (count .lt. 41) then
-                      WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
-                    ENDIF
-                   
+                  DO mm = 1, 200
+                    IF (outstg (mm:mm) .eq. '*') THEN
+                      outstg (mm:mm) = 'm'
+                      if(mm .ge. 93) then
+                        count=count+1
+                      end if
+                    END IF
+                  END DO
+                      
+                  if (count .lt. 64) then
+                    WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
+                  endif
+
                   END DO  ! End jj = 1, MXR8VN loop
                 end if  ! End tvflag > 0
 c-----7---------------------------------------------------------------72
