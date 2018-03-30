@@ -107,34 +107,24 @@ C*    Open the output text file
       OPEN (UNIT=12, FILE=outf)
 
 C*    Print the HDR data for this station report.
-      print*,"(1) writing header"
       WRITE  ( UNIT = 12, FMT = '("#", 162("-") )' )
-      print*,"(2) writing header"
       WRITE  ( UNIT = 12, FMT = '("#",a5,1x,a8,1x,a2,
      +    2x,A5,1x,A5,5x,a6,1x,a6,
      +    5x,a4,3x,a5,4x,a4,3x,a4,1x,a3,1x,a3,2x,a6,
      +    6x,a3,6x,a3,4x,a5,1x,a8,6x,a3,6x,a3,6x,a3 )' )
      +    'REP','DAT','OBT','DHR','SID','XOB','YOB',
-     +    'ELV','TYP',
-     +    'T29','ITP',
-     +    'lev','var','OB','QM', 'PC', 'RC', 'FC',
-     +    'AN','OE','CAT'
-      print*,"(3) writing header"
+     +    'ELV','TYP','T29','ITP','lev','var',
+     +    'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
       WRITE  ( UNIT = 12, FMT = '("#", 162("-") )' )    
-      print*,"(4) writing header"
 C
 C*   Get the next station report from the input file.
 C
-      print*,"calling READPB"
   10  CALL READPB  ( 11, subset, idate, ierrpb )
-      print*,"ierrpb: ",ierrpb
       IF ( ierrpb .eq. -1 )  THEN
         STOP
       END IF
        
-      print*,"writing sid"
       write(unit=sid,fmt='(a5)') hdr(2)
-      print*,"sid = ",sid
  
 c-----7---------------------------------------------------------------72
 c    PREPBUFR data type subsetting filter
@@ -173,9 +163,7 @@ c    Proceed if flag > 0 and platflag > 0
 c       (i.e. passed data type and reporting platform subsetting filters)
 
       if( (flag .gt. 0) .and. (platflag .gt. 0) ) then
-        print*, "writing idatec"
         write (unit=idatec, fmt='(i10)') idate
-        print*, "idatec = ",idatec
 
 c-----7---------------------------------------------------------------72
 c     Station ID subsetting filter
@@ -219,14 +207,11 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  print *,"(1) writing outstg"
-                  WRITE ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
-     +                  1x, F6.3, 1x, a8, 1x,
-     +                  2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
-     +                  F6.1, I4, 1X, A8, 8(1X,F8.1) )' )
+                  WRITE (UNIT = outstg, 1000)
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
-     +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
+     +                  lv, var(kk), 
+     +                  (evns(ii,lv,jj,kk),ii=1,8)
 
                   count=1
                   DO mm = 1, 200
@@ -262,8 +247,6 @@ c-----7---------------------------------------------------------------72
 c     Longitude/latitude region subsetting filter
 
         if(lon1 .lt. lon2) then 
-          print*,"(2) lon1 < lon2 subsetting"
-          print*,"lon1, lon2 = ",lon1,lon2
           if ((hdr(3) .ge. lon1) .and. (hdr(3) .le. lon2)) then 
             if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then 
 c              print *,"got here",subset(1:6)
@@ -300,14 +283,11 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  print *,"(2) writing outstg"
-                  WRITE ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
-     +                  1x, F6.3, 1x, a8, 1x,
-     +                  2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
-     +                  F6.1, I4, 1X, A8, 8(1X,F8.1) )' )
+                  WRITE (UNIT = outstg, 1000)
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
-     +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
+     +                  lv, var(kk), 
+     +                  (evns(ii,lv,jj,kk),ii=1,8)
 
                   count=1
                   DO mm = 1, 200
@@ -324,9 +304,7 @@ c                  IF  ( outstg (90:154) .ne. ' ' )  THEN
 c                    WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
 c                  ENDIF
 
-                  print*, "count = ",count
                   if (count .lt. 41) then
-                    print*,"writing to output file"
                     WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                   endif
                 END DO  ! End jj = 1, MXR8VN loop
@@ -340,9 +318,6 @@ c-----7---------------------------------------------------------------72
           end if  ! End if (hdr(3) >= lon1) and (hdr(3) <= lon2)
 
         else  ! Case lon1 > lon2
-
-          print*,"(3) lon1 > lon2 subsetting"
-          print*,"lon1, lon2 = ",lon1,lon2
 
           if ((hdr(3) .ge. lon1) .or. (hdr(3) .le. lon2)) then
             if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then
@@ -378,14 +353,11 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  print *,"(3) writing outstg"
-                    WRITE  ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
-     +              1x, F6.3, 1x, a8, 1x,
-     +              2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
-     +              F6.1, I4, 1X, A8, 8(1X,F8.1) )' )
-     +              subset(1:6),idatec(1:8),idatec(9:10),
-     +              ( hdr (ii), ii = 1, 8 ),
-     +              lv, var (kk), ( evns ( ii, lv, jj, kk ),ii=1,8)
+                  WRITE (UNIT = outstg, 1000)
+     +                  subset(1:6),idatec(1:8),idatec(9:10),
+     +                  (hdr (ii), ii = 1, 8),
+     +                  lv, var(kk), 
+     +                  (evns(ii,lv,jj,kk),ii=1,8)
 
                     count=1
                     DO mm = 1, 200
@@ -420,6 +392,9 @@ C
         IF  ( ierrpb .eq. 0 )  THEN
             GO TO 10
         END IF
+        
+ 1000  FORMAT (A6,1x,a8,1x,a2,1x, F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,
+     + 1X, F7.1, 1X, F6.1, I4, 1X, A8, 8(1X,F10.1))
 C* 
         STOP
         END
