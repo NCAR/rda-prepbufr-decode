@@ -125,6 +125,9 @@ C
       END IF
        
       write(unit=sid,fmt='(a5)') hdr(2)
+
+C*    Reset virtual temperature flag to default value
+      tvflag=1
  
 c-----7---------------------------------------------------------------72
 c    PREPBUFR data type subsetting filter
@@ -224,6 +227,7 @@ c     + at level/stack index = ",lv,jj
                   END DO
                       
                   if (count .lt. 64) then
+                    print*,"AN: ",evns(7,lv,jj,kk)
                     WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                   endif
                 END DO  ! End jj = 1, MXR8VN loop
@@ -295,6 +299,7 @@ c     + at level/stack index = ",lv,jj
                   END DO
                       
                   if (count .lt. 64) then
+                    print*,"AN: ",evns(7,lv,jj,kk)
                     WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                   endif
                 END DO  ! End jj = 1, MXR8VN loop
@@ -360,6 +365,7 @@ c     + at level/stack index = ",lv,jj
                   END DO
                       
                   if (count .lt. 64) then
+                    print*,"AN: ",evns(7,lv,jj,kk)
                     WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                   endif
 
