@@ -107,7 +107,9 @@ C*    Open the output text file
       OPEN (UNIT=12, FILE=outf)
 
 C*    Print the HDR data for this station report.
+      print*,"(1) writing header"
       WRITE  ( UNIT = 12, FMT = '("#", 162("-") )' )
+      print*,"(2) writing header"
       WRITE  ( UNIT = 12, FMT = '("#",a5,1x,a8,1x,a2,
      +    2x,A5,1x,A5,5x,a6,1x,a6,
      +    5x,a4,3x,a5,4x,a4,3x,a4,1x,a3,1x,a3,2x,a6,
@@ -117,6 +119,7 @@ C*    Print the HDR data for this station report.
      +    'T29','ITP',
      +    'lev','var','OB','QM', 'PC', 'RC', 'FC',
      +    'AN','OE','CAT'
+      print*,"(3) writing header"
       WRITE  ( UNIT = 12, FMT = '("#", 162("-") )' )    
 C
 C*   Get the next station report from the input file.
