@@ -121,6 +121,7 @@ C*    Print the HDR data for this station report.
      +    'AN','OE','CAT'
       print*,"(3) writing header"
       WRITE  ( UNIT = 12, FMT = '("#", 162("-") )' )    
+      print*,"(4) writing header"
 C
 C*   Get the next station report from the input file.
 C
@@ -129,7 +130,9 @@ C
         STOP
       END IF
        
-      write(unit=sid,fmt='(a5)')hdr(2)
+      print*,"writing sid"
+      write(unit=sid,fmt='(a5)') hdr(2)
+      print*,"sid = ",sid
  
 c-----7---------------------------------------------------------------72
 c    PREPBUFR data type subsetting filter
@@ -168,7 +171,9 @@ c    Proceed if flag > 0 and platflag > 0
 c       (i.e. passed data type and reporting platform subsetting filters)
 
       if( (flag .gt. 0) .and. (platflag .gt. 0) ) then
+        print*, "writing idatec"
         write (unit=idatec, fmt='(i10)') idate
+        print*, "idatec = ",idatec
 
 c-----7---------------------------------------------------------------72
 c     Station ID subsetting filter
