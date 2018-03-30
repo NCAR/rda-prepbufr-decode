@@ -207,7 +207,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  WRITE (UNIT = outstg, 500)
+                  WRITE (UNIT = outstg, FMT=500)
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
      +                  lv, var(kk), 
@@ -283,7 +283,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  WRITE (UNIT = outstg, 500)
+                  WRITE (UNIT = outstg, FMT=500)
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
      +                  lv, var(kk), 
@@ -353,7 +353,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
-                  WRITE (UNIT = outstg, 500)
+                  WRITE (UNIT = outstg, FMT=500)
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
      +                  lv, var(kk), 
