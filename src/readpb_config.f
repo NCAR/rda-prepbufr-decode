@@ -125,7 +125,9 @@ C*    Print the HDR data for this station report.
 C
 C*   Get the next station report from the input file.
 C
+      print*,"calling READPB"
   10  CALL READPB  ( 11, subset, idate, ierrpb )
+      print*,"ierrpb: ",ierrpb
       IF ( ierrpb .eq. -1 )  THEN
         STOP
       END IF
