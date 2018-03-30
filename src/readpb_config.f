@@ -296,7 +296,7 @@ c     + at level/stack index = ",lv,jj
      +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
 
                   count=1
-                  DO mm = 1, 200
+                  DO mm = 1, MXSTRL
                     IF (outstg (mm:mm) .eq. '*') THEN
 c                      outstg (mm:mm) = ' '
                       outstg (mm:mm) = 'm'
