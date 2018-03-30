@@ -6,7 +6,7 @@
       parameter	(maxparm=5)
       parameter	(maxsaid=15)
 C*
-      CHARACTER  outstg*(MXSTRL), subset*8, 
+      CHARACTER  outstg*(200), subset*8, 
      +           inf*300, outf*300, config*300, argv*300,
      +           crec*101, type(maxtype)*6,
      +  		 parm(maxparm),id*4,idatec*10,
@@ -229,7 +229,7 @@ c     + at level/stack index = ",lv,jj
      +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
 
                   count=1
-                  DO mm = 1, MXSTRL
+                  DO mm = 1, 200
                     IF (outstg (mm:mm) .eq. '*') THEN
 c                      outstg (mm:mm) = ' '
                       outstg (mm:mm) = 'm'
@@ -310,7 +310,7 @@ c     + at level/stack index = ",lv,jj
      +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
 
                   count=1
-                  DO mm = 1, MXSTRL
+                  DO mm = 1, 200
                     IF (outstg (mm:mm) .eq. '*') THEN
 c                      outstg (mm:mm) = ' '
                       outstg (mm:mm) = 'm'
@@ -388,7 +388,7 @@ c     + at level/stack index = ",lv,jj
      +              lv, var (kk), ( evns ( ii, lv, jj, kk ),ii=1,8)
 
                     count=1
-                    DO mm = 1, MXSTRL
+                    DO mm = 1, 200
                       IF  ( outstg (mm:mm) .eq. '*' )  THEN
 c                       outstg (mm:mm) = ' '
                         outstg (mm:mm) = 'm'

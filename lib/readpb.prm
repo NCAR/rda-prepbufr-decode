@@ -14,7 +14,7 @@ C*
         PARAMETER       ( MXR8VT = 6 )
 C*                                      Maximum number of BUFR variable types
 C*
-        PARAMETER       ( MXSTRL = 200 )
+        PARAMETER       ( MXSTRL = 80 )
 C*                                      Maximum size of a string
 C*
         REAL*8          hdr ( MXR8PM ),
