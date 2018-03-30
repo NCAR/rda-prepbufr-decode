@@ -6,7 +6,7 @@
       parameter	(maxparm=5)
       parameter	(maxsaid=15)
 C*
-      CHARACTER  outstg*(200), subset*8, 
+      CHARACTER  outstg*(MXSTRL), subset*8, 
      +           inf*300, outf*300, config*300, argv*300,
      +           crec*101, type(maxtype)*6,
      +  		 parm(maxparm),id*4,idatec*10,
@@ -311,7 +311,7 @@ c                    WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
 c                  ENDIF
 
                   if (count .lt. 41) then
-                    WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
+                    WRITE  ( UNIT = 12, FMT = '(A180)' )  outstg
                   endif
                 END DO  ! End jj = 1, MXR8VN loop
 
@@ -368,7 +368,7 @@ c     + at level/stack index = ",lv,jj
      +              lv, var (kk), ( evns ( ii, lv, jj, kk ),ii=1,8)
 
                     count=1
-                    DO mm = 1, 200
+                    DO mm = 1, MXSTRL
                       IF  ( outstg (mm:mm) .eq. '*' )  THEN
 c                       outstg (mm:mm) = ' '
                         outstg (mm:mm) = 'm'
@@ -381,7 +381,7 @@ c                   IF  ( outstg (90:154) .ne. ' ' )  THEN
 c                     WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
 c                   ENDIF
                     if (count .lt. 41) then
-                      WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
+                      WRITE  ( UNIT = 12, FMT = '(A180)' )  outstg
                     ENDIF
                    
                   END DO  ! End jj = 1, MXR8VN loop
