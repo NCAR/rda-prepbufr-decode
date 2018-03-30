@@ -209,6 +209,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
+                  print *,"(1) writing outstg"
                   WRITE ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
      +                  1x, F6.3, 1x, a8, 1x,
      +                  2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
@@ -233,7 +234,7 @@ c                    WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
 c                  ENDIF
 
                   if (count .lt. 41) then
-                    WRITE  ( UNIT = 12, FMT = '(A180)' )  outstg
+                    WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                   endif
                 END DO  ! End jj = 1, MXR8VN loop
 
@@ -287,6 +288,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
+                  print *,"(2) writing outstg"
                   WRITE ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
      +                  1x, F6.3, 1x, a8, 1x,
      +                  2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
@@ -310,8 +312,10 @@ c                  IF  ( outstg (90:154) .ne. ' ' )  THEN
 c                    WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
 c                  ENDIF
 
+                  print*, "count = ",count
                   if (count .lt. 41) then
-                    WRITE  ( UNIT = 12, FMT = '(A180)' )  outstg
+                    print*,"writing to output file"
+                    WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                   endif
                 END DO  ! End jj = 1, MXR8VN loop
 
@@ -359,6 +363,7 @@ c                    print *, "[main] skipping virtual temperature
 c     + at level/stack index = ",lv,jj
                     cycle
                   endif
+                  print *,"(3) writing outstg"
                     WRITE  ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
      +              1x, F6.3, 1x, a8, 1x,
      +              2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
@@ -381,7 +386,7 @@ c                   IF  ( outstg (90:154) .ne. ' ' )  THEN
 c                     WRITE  ( UNIT = 12, FMT = '(A150)' )  outstg
 c                   ENDIF
                     if (count .lt. 41) then
-                      WRITE  ( UNIT = 12, FMT = '(A180)' )  outstg
+                      WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
                     ENDIF
                    
                   END DO  ! End jj = 1, MXR8VN loop
