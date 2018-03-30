@@ -107,19 +107,19 @@ C*    Open the output text file
       open ( unit=12, file=outf)
 
 C*    Print the HDR data for this station report.
-      WRITE  ( UNIT = 12, FMT = '("#", 142("-") )' )
+      WRITE  ( UNIT = 12, FMT = '("#", 162("-") )' )
 
       WRITE  ( UNIT = 12, FMT = '("#",a5,1x,a8,1x,a2,
      +    2x,A5,1x,A5,5x,a6,1x,a6,
      +    5x,a4,3x,a5,4x,a4,3x,a4,1x,a3,1x,a3,2x,a6,
-     +    6x,a3,6x,a3,4x,a5,1x,a8,6x,a3 )' )
+     +    6x,a3,6x,a3,4x,a5,1x,a8,6x,a3,6x,a3,6x,a3 )' )
      +    'REP','DAT','OBT','DHR','SID','XOB','YOB',
      +    'ELV','TYP',
      +    'T29','ITP',
-     +    'lev','var','OB','qm', 'pc', 'rc', 'fc',
-     +    'cat'
+     +    'lev','var','OB','QM', 'PC', 'RC', 'FC',
+     +    'AN','OE','CAT'
 
-      WRITE  ( UNIT = 12, FMT = '("#", 142("-") )' )    
+      WRITE  ( UNIT = 12, FMT = '("#", 162("-") )' )    
 C
 C*   Get the next station report from the input file.
 C
@@ -175,9 +175,8 @@ c     Station ID subsetting filter
 C*    Print the EVNS data for this station report.
         if(ns .gt. 0) then
           do s=1,ns
-c            print *,"said =",sid
             if(said(s) .eq. sid) then
-              print *,"got here stn =",said(s)
+              print *,"Subsetting station ID: ",said(s)
               DO lv = 1, nlev
               DO kk = 1, MXR8VT
                 pflag=0
@@ -216,7 +215,7 @@ c     + at level/stack index = ",lv,jj
                   WRITE ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
      +                  1x, F6.3, 1x, a8, 1x,
      +                  2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
-     +                  F6.1, I4, 1X, A2, 7(1X,F8.1) )' )
+     +                  F6.1, I4, 1X, A2, 8(1X,F8.1) )' )
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
      +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
@@ -294,7 +293,7 @@ c     + at level/stack index = ",lv,jj
                   WRITE ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
      +                  1x, F6.3, 1x, a8, 1x,
      +                  2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
-     +                  F6.1, I4, 1X, A2, 7(1X,F8.1) )' )
+     +                  F6.1, I4, 1X, A2, 8(1X,F8.1) )' )
      +                  subset(1:6),idatec(1:8),idatec(9:10),
      +                  (hdr (ii), ii = 1, 8),
      +                  lv, var(kk), (evns(ii,lv,jj,kk),ii=1,8)
@@ -366,7 +365,7 @@ c     + at level/stack index = ",lv,jj
                     WRITE  ( UNIT = outstg, FMT = '(A6,1x,a8,1x,a2,
      +              1x, F6.3, 1x, a8, 1x,
      +              2F7.2, 1X, 2F8.1, 1X, F7.1, 1X,
-     +              F6.1, I4, 1X, A2, 7(1X,F8.1) )' )
+     +              F6.1, I4, 1X, A2, 8(1X,F8.1) )' )
      +              subset(1:6),idatec(1:8),idatec(9:10),
      +              ( hdr (ii), ii = 1, 8 ),
      +              lv, var (kk), ( evns ( ii, lv, jj, kk ),ii=1,8)
