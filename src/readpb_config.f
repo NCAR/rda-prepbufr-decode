@@ -15,18 +15,26 @@ C*
 C*
       INTEGER    plat(maxplat)
       
-      PARAMETER  ( NFILO = 15 )
- 
-      LOGICAL    found 
+      PARAMETER  ( NFILO = 15 ) 
+      INTEGER    iunso ( NFILO )
+     +		/   51,   52,   53,   54,   55,
+     +		    56,   57,   58,   59,   60,
+     +		    61,   62,   63,   64,   65  /
+
+	  CHARACTER*6 filo ( NFILO )
+     +		/ 'ADPUPA', 'AIRCAR', 'AIRCFT', 'SATWND', 'PROFLR',
+     +		  'VADWND', 'SATBOG', 'SATEMP', 'ADPSFC', 'SFCSHP',
+     +		  'SFCBOG', 'SPSSMI', 'SYNDAT', 'ERS1DA', 'GOESND'  /
 
       CHARACTER  var ( MXR8VT )
+     +        /'P','Q','T','Z','U','V'/
+
+      LOGICAL    found 
 
       INTEGER    io,stat,n,inlength,np,nt,nplat,
      +           count,k,flag,pflag,p,ns,s,platflag
 	
    	  REAL*8	 lat1,lat2,lon1,lon2,platform
-
-      DATA       var /'P','Q','T','Z','U','V'/
         
       INTEGER    tv_ev_idx, tvflag
 
@@ -67,7 +75,6 @@ c*	open the configuration file
         read(10, '(A100)', iostat=io) crec
         if (io < 0) exit
         inlength=len_trim(crec)-4
-c*       print*,"length: ",inlength
         select case (crec(1:4))
           case ("LATS")
             read (crec,*) id,lat1,lat2
@@ -98,303 +105,242 @@ c*       print*,"length: ",inlength
       print*, "np = ",np
       print*, "nt = ",nt
       print*, "nplat = ",nplat
-C
+c-----7---------------------------------------------------------------72
+C*    Open the output file(s)
+c-----7---------------------------------------------------------------72
+ctac      OPEN (UNIT=12, FILE=outf)
+	  
+	  if(nt .gt. 0) then
+	    do kk = 1, nt
+	    do ii = 1, NFILO
+	      if (type(kk) .eq. filo(ii) then
+	        open (unit=iunso(ii), file=outf // '.' // filo(ii)
+	        exit
+	      end if
+	    end do
+	    end do
+	  else
+	    do ii = 1, NFILO
+	      open (unit=iunso(ii), file=outf // '.' // filo(ii)
+	    end do	  
+	  end if
+	  
+c-----7---------------------------------------------------------------72
+C*    Open the PREPBUFR input file
+c-----7---------------------------------------------------------------72
       OPEN ( UNIT = 11, FILE = inf, FORM = 'UNFORMATTED' )
       CALL OPENBF  ( 11, 'IN', 11 )
       CALL DATELEN  ( 10 )
 
-C*    Open the output text file
-      OPEN (UNIT=12, FILE=outf)
-
+c-----7---------------------------------------------------------------72
 C*    Print the HDR data for this station report.
-      WRITE (UNIT=12, FMT=15)
-      WRITE (UNIT=12, FMT=20)
-     +    'REP','DAT','OBT','DHR','SID','XOB','YOB',
-     +    'ELV','TYP','T29','ITP','lev','var',
-     +    'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
-      WRITE (UNIT=12, FMT=15)
-  15  FORMAT ("#", 162("-"))
-  20  FORMAT ("#",a5,a9,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
+c-----7---------------------------------------------------------------72
+ctac      WRITE (UNIT=12, FMT=15)
+ctac      WRITE (UNIT=12, FMT=20)
+ctac     +    'REP','DAT','OBT','DHR','SID','XOB','YOB',
+ctac     +    'ELV','TYP','T29','ITP','lev','var',
+ctac     +    'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
+ctac      WRITE (UNIT=12, FMT=15)
+ctac  15  FORMAT ("#", 162("-"))
+ctac  20  FORMAT ("#",a5,a9,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
 
-C
+c-----7---------------------------------------------------------------72
 C*   Get the next station report from the input file.
-C
+c-----7---------------------------------------------------------------72
   10  CALL READPB  ( 11, subset, idate, ierrpb )
       IF ( ierrpb .eq. -1 )  THEN
         STOP
       END IF
-       
-      write(unit=sid,fmt='(a5)') hdr(2)
 
-C*    Reset virtual temperature flag to default value
-      tvflag=1
- 
 c-----7---------------------------------------------------------------72
-c    PREPBUFR data type subsetting filter
-
-      flag=0
-
-      if(nt .gt. 0) then
-        do k=1,nt
-c          print *,subset(1:6)," ",type(k)
+C*	PREPBUFR data type subsetting filter
+c-----7---------------------------------------------------------------72
+      if (nt .gt. 0) then
+        k = 1
+        found = .false.
+        do while ((.not. found) .and. (k .le. nt))
           if(subset(1:6) .eq. type(k)) then
-            flag=1 
+            found = .true.
+          else
+            k = k + 1
           end if
-        end do 
-      else
-        flag=1
+        end do
+        if (.not. found) then
+          go to 10
+        end if
       end if
 
 c-----7---------------------------------------------------------------72
 c    Reporting platform (input report type) subsetting filter
-
-      platflag=0
-      if(nplat .gt. 0) then
-        do k=1,nplat
-          print *,hdr(7)," ",plat(k)
-          if(hdr(7) .eq. plat(k)) then
-            platflag=1 
-          end if
-        end do 
-      else
-        platflag=1
-      end if
-C
-
 c-----7---------------------------------------------------------------72
-c    Proceed if flag > 0 and platflag > 0 
-c       (i.e. passed data type and reporting platform subsetting filters)
-
-      if( (flag .gt. 0) .and. (platflag .gt. 0) ) then
-        write (unit=idatec, fmt='(i10)') idate
+      if (nplat .gt. 0) then
+        k = 1
+        found = .false.
+        do while ((.not. found) .and. (k .le. nplat))
+          print *,"PLATFORM: ",hdr(7)," ",plat(k)
+          if(hdr(7) .eq. plat(k)) then
+            found = .true.
+          else
+            k = k + 1
+          end if
+        end do
+        if (.not. found) then
+          go to 10
+        end if
+      end if
 
 c-----7---------------------------------------------------------------72
 c     Station ID subsetting filter
-        if(ns .gt. 0) then
-          do s=1,ns
-            if(said(s) .eq. sid) then
-              print *,"Subsetting station ID: ",said(s)
-              DO lv = 1, nlev
-              DO kk = 1, MXR8VT
-                pflag=0
+c-----7---------------------------------------------------------------72
+      if (ns .gt. 0) then
+        k = 1
+        found = .false.       
+        write(unit=sid,fmt='(a5)') hdr(2)
+        do while ((.not. found) .and. (k .le. ns))
+          print *,"STATION ID: ",sid," ",said(k)
+          if(sid .eq. said(k)) then
+            found = .true.
+          else
+            k = k + 1
+          end if
+        end do
+        if (.not. found) then
+          go to 10
+        end if
+      end if
+ 
+c-----7---------------------------------------------------------------72
+c     Longitude/latitude subsetting filters
+c-----7---------------------------------------------------------------72
+      found = .false.
+C*    Case lon1 < lon2
+      if(lon1 .lt. lon2) then 
+        if ((hdr(3) .ge. lon1) .and. (hdr(3) .le. lon2)) then 
+          if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then
+            found = .true.
+          end if
+        end if
+      else
+C*    Case lon1 > lon2
+        if ((hdr(3) .ge. lon1) .or. (hdr(3) .le. lon2)) then
+          if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then
+            found = .true.
+          end if
+        end if
+      end if
+      if (.not. found) then
+        go to 10
+      end if
 
+c-----7---------------------------------------------------------------72
+C*	Set the appropriate output file unit number.
+c-----7---------------------------------------------------------------72
+	  ii = 1
+	  found = .false.
+	  DO WHILE ((.not. found) .and. (ii .le. NFILO))
+	    IF (subset (1:6) .eq. filo (ii))  THEN
+		  found = .true.
+		  iuno = iunso(ii)
+	    ELSE 
+		  ii = ii + 1
+	    END IF
+	  END DO
+	  IF ((.not. found) .and. (ierrpb .eq. 0)) THEN
+	    GO TO 10
+	  END IF
+
+c-----7---------------------------------------------------------------72
+C*	Print the HDR data for this station report.
+c-----7---------------------------------------------------------------72
+	  WRITE  (UNIT=iuno, FMT=300 ) (hdr(ii), ii=1,8)
+  300 FORMAT (A8,1X,2F7.2,1X,F7.3,1X,2F8.1,1X,F7.1,1X,F6.1)
+  
+      write (unit=idatec, fmt='(i10)') idate
+
+c-----7---------------------------------------------------------------72
+      DO lv = 1, nlev
+      
+	    WRITE (UNIT=iuno, FMT='(80("-"))')
+	    WRITE (UNIT=iuno, FMT='("lev ", I4, 8A9)')
+     +		lv,'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
+	    WRITE (UNIT=iuno, FMT='(80("-"))')      
+      
+      DO kk = 1, MXR8VT
+
+c-----7---------------------------------------------------------------72
 c     Parameter subsetting filter (P, Q, T, Z, U, V)
-                if(np .gt. 0) then
-                  do p=1,np
-                    if(var(kk) .eq. parm(p)) then
-                      pflag=1
-                    end if
-                  end do
-                else
-                  pflag=1
-                end if
-
-c     Proceed if pflag > 0 (i.e. passed parameter subsetting filter)
-                if(pflag .gt.0) then
+c-----7---------------------------------------------------------------72
+        if(np .gt. 0) then
+          p = 1
+          found = .false.
+          do while ((.not. found) .and (p .le. np))
+            if(var(kk) .eq. parm(p)) then
+              found = .true.
+            else
+              p = p + 1
+            end if
+          end do
+          if (.not. found) then
+            cycle
+          end if
+        end if
 
 c-----7---------------------------------------------------------------72
 c   Check for virtual temperature
-                if (var(kk) .eq. 'T') then
-                  call virtmp(lv, kk, tv_ev_idx, tvflag)
-                endif
-                
 c-----7---------------------------------------------------------------72
-c  Proceed if tvflag > 0
-                if (tvflag .gt. 0) then
+        tvflag=1
+        if (var(kk) .eq. 'T') then
+          call virtmp(lv, kk, tv_ev_idx, tvflag)
+          if (tvflag .eq. -1) then
+            cycle
+          end if
+        end if
                 
+c-----7---------------------------------------------------------------72                
 C*    Print the EVNS data for this station report.
 c     Write PREPBUFR message to output file
-                DO jj = 1, MXR8VN
-                if ((var(kk) .eq. 'T') .and. (jj .le. tv_ev_idx)) then
-c                    print *, "[main] skipping virtual temperature
-c     + at level/stack index = ",lv,jj
-                    cycle
-                  endif
-                  WRITE (UNIT = outstg, FMT=500)
-     +                  subset(1:6),idatec(1:8),idatec(9:10),
-     +                  (hdr (ii), ii = 1, 8),
-     +                  lv, var(kk), 
-     +                  (evns(ii,lv,jj,kk),ii=1,8)
-
-                  count=1
-                  DO mm = 1, 200
-                    IF (outstg (mm:mm) .eq. '*') THEN
-                      outstg (mm:mm) = 'm'
-                      if(mm .ge. 93) then
-                        count=count+1
-                      end if
-                    END IF
-                  END DO
-                      
-                  if (count .lt. 64) then
-                    print*,subset(1:6)," var, lev, AN: ",
-     +lv,var(kk),evns(6,lv,jj,kk)
-                    WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
-                  endif
-                END DO  ! End jj = 1, MXR8VN loop
-
-              end if  ! End tvflag > 0
 c-----7---------------------------------------------------------------72
-            end if  ! End pflag > 0
-          END DO  ! End kk = 1, MXR8VT loop
-          END DO  ! End lv = 1, nlev loop
-        end if  ! End said(s) = sid
-      end do ! End s = 1, ns loop
 
-      else  ! End ns > 0
+        DO jj = 1, MXR8VN
+C*        Skip virtual temperature at tv_ev_idx
+          if ((var(kk) .eq. 'T') .and. (jj .le. tv_ev_idx)) then
+            cycle
+          endif
+          WRITE (UNIT=outstg, FMT=500)
+     +           subset(1:6),idatec(1:8),idatec(9:10),
+     +           (hdr (ii), ii = 1, 8),
+     +           lv, var(kk), 
+     +           (evns(ii,lv,jj,kk),ii=1,8)
+
+          count=1
+          DO mm = 1, 200
+            IF (outstg (mm:mm) .eq. '*') THEN
+              outstg (mm:mm) = 'm'
+              if(mm .ge. 93) then
+                count=count+1
+              end if
+            END IF
+          END DO
+
+          if (count .lt. 64) then
+            WRITE (UNIT=12, FMT='(A200)')  outstg
+          endif
+        END DO  ! End jj = 1, MXR8VN loop
+
+      END DO  ! End kk = 1, MXR8VT loop
+      END DO  ! End lv = 1, nlev loop
 
 c-----7---------------------------------------------------------------72
-c     Longitude/latitude region subsetting filter
-
-        if(lon1 .lt. lon2) then 
-          if ((hdr(3) .ge. lon1) .and. (hdr(3) .le. lon2)) then 
-            if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then 
-c              print *,"got here",subset(1:6)
-         	  DO lv = 1, nlev
-              DO kk = 1, MXR8VT
-                pflag=0
-
-c     Parameter subsetting filter (P, Q, T, Z, U, V)
-                if(np .gt. 0) then
-                  do p=1,np
-                    if(var(kk) .eq. parm(p)) then
-                      pflag=1
-                    end if
-                  end do
-                else
-                  pflag=1
-                end if
- 
-c     Proceed if pflag > 0 (i.e. passed parameter subsetting filter)
-                if(pflag .gt.0) then
- 
-c-----7---------------------------------------------------------------72
-                if (var(kk) .eq. 'T') then
-                  call virtmp(lv, kk, tv_ev_idx, tvflag)
-                endif
-c-----7---------------------------------------------------------------72
-c  Proceed if tvflag > 0
-                if (tvflag .gt. 0) then
-
-c  Write PREPBUFR message to output file
-                DO jj = 1, MXR8VN
-                if ((var(kk) .eq. 'T') .and. (jj .le. tv_ev_idx)) then
-c                    print *, "[main] skipping virtual temperature
-c     + at level/stack index = ",lv,jj
-                    cycle
-                  endif
-                  WRITE (UNIT = outstg, FMT=500)
-     +                  subset(1:6),idatec(1:8),idatec(9:10),
-     +                  (hdr (ii), ii = 1, 8),
-     +                  lv, var(kk), 
-     +                  (evns(ii,lv,jj,kk),ii=1,8)
-
-                  count=1
-                  DO mm = 1, 200
-                    IF (outstg (mm:mm) .eq. '*') THEN
-                      outstg (mm:mm) = 'm'
-                      if(mm .ge. 93) then
-                        count=count+1
-                      end if
-                    END IF
-                  END DO
-                      
-                  if (count .lt. 64) then
-                    print*,subset(1:6)," var, lev, AN: ",
-     +lv,var(kk),evns(6,lv,jj,kk)
-                    WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
-                  endif
-                END DO  ! End jj = 1, MXR8VN loop
-
-                end if  ! End tvflag > 0
-c-----7---------------------------------------------------------------72
-                end if  ! End pflag > 0
-              END DO  ! End kk = 1, MXR8VT loop
-              END DO  ! End lv = 1, nlev loop
-            end if  ! End if (hdr(4) <= lat1) and (hdr(4) >= lat2)
-          end if  ! End if (hdr(3) >= lon1) and (hdr(3) <= lon2)
-
-        else  ! Case lon1 > lon2
-
-          if ((hdr(3) .ge. lon1) .or. (hdr(3) .le. lon2)) then
-            if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then
-c                print *,"got here",subset(1:6)
-              DO lv = 1, nlev
-              DO kk = 1, MXR8VT
-                pflag=0
-
-                if(np .gt. 0) then
-                  do p=1,np
-                    if(var(kk) .eq. parm(p)) then
-                      pflag=1
-                    end if
-                  end do
-                else
-                  pflag=1
-                end if
-
-                if(pflag .gt.0) then
-
-c-----7---------------------------------------------------------------72
-                if (var(kk) .eq. 'T') then
-                  call virtmp(lv, kk, tv_ev_idx, tvflag)
-                endif
-c-----7---------------------------------------------------------------72
-c  Proceed if tvflag > 0
-                if (tvflag .gt. 0) then
-
-c  Write PREPBUFR message to output file
-                DO jj = 1, MXR8VN
-                if ((var(kk) .eq. 'T') .and. (jj .le. tv_ev_idx)) then
-c                    print *, "[main] skipping virtual temperature
-c     + at level/stack index = ",lv,jj
-                    cycle
-                  endif
-                  WRITE (UNIT = outstg, FMT=500)
-     +                  subset(1:6),idatec(1:8),idatec(9:10),
-     +                  (hdr (ii), ii = 1, 8),
-     +                  lv, var(kk), 
-     +                  (evns(ii,lv,jj,kk),ii=1,8)
-
-                    count=1
-                  DO mm = 1, 200
-                    IF (outstg (mm:mm) .eq. '*') THEN
-                      outstg (mm:mm) = 'm'
-                      if(mm .ge. 93) then
-                        count=count+1
-                      end if
-                    END IF
-                  END DO
-                      
-                  if (count .lt. 64) then
-                    print*,subset(1:6)," var, lev, AN: ",
-     +lv,var(kk),evns(6,lv,jj,kk)
-                    WRITE  ( UNIT = 12, FMT = '(A200)' )  outstg
-                  endif
-
-                  END DO  ! End jj = 1, MXR8VN loop
-                end if  ! End tvflag > 0
-c-----7---------------------------------------------------------------72
-                end if  ! End if pflag > 0
-              END DO  ! End kk = 1, MXR8VT loop
-              END DO  ! End lv = 1, nlev loop
-            end if  ! End if (hdr(4) <= lat1) and (hdr(4) >= lat2)
-          end if  ! End if (hdr(3) >= lon1) or (hdr(3) <= lon2)
-        end if  ! End else (lon1 > lon2)
-        end if  ! End else (ns = 0)
-        
-        end if  ! End if flag > 0 .and. platflag > 0
-C 
-        IF  ( ierrpb .eq. 0 )  THEN
-            GO TO 10
-        END IF
+      IF  ( ierrpb .eq. 0 )  THEN
+        GO TO 10
+      END IF
         
 C*    Format specifier for outstg
   500 FORMAT (A6,1x,a8,1x,a2,1x, F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,
      + 1X, F7.1, 1X, F6.1, I4, 1X, A5, 8(1X,F8.1))
 C* 
-        STOP
-        END
+      END
+
 C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
         SUBROUTINE READPB  ( lunit, subset, idate, iret )
@@ -633,7 +579,7 @@ c   //
                     
 c Skip if reason code = 3
           if (evns(4,lev,j,k) .eq. virtmp_reason_code) then
-            flag = 0
+            flag = -1
             return
           endif
                     
