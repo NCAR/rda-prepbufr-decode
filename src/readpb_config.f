@@ -113,15 +113,15 @@ ctac      OPEN (UNIT=12, FILE=outf)
 	  if(nt .gt. 0) then
 	    do kk = 1, nt
 	    do ii = 1, NFILO
-	      if (type(kk) .eq. filo(ii) then
-	        open (unit=iunso(ii), file=outf // '.' // filo(ii)
+	      if (type(kk) .eq. filo(ii)) then
+	        open (unit=iunso(ii), file=outf // '.' // filo(ii))
 	        exit
 	      end if
 	    end do
 	    end do
 	  else
 	    do ii = 1, NFILO
-	      open (unit=iunso(ii), file=outf // '.' // filo(ii)
+	      open (unit=iunso(ii), file=outf // '.' // filo(ii))
 	    end do	  
 	  end if
 	  
@@ -273,7 +273,7 @@ c-----7---------------------------------------------------------------72
         if(np .gt. 0) then
           p = 1
           found = .false.
-          do while ((.not. found) .and (p .le. np))
+          do while ((.not. found) .and. (p .le. np))
             if(var(kk) .eq. parm(p)) then
               found = .true.
             else
