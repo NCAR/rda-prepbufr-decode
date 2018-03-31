@@ -53,21 +53,21 @@ files corresponding to respective MNEMONICS will be generated.
 Definitions for output file MNEMONICS:
 ================================================================================
 
-ADPUPA:  Upper-Air (RAOB, PIBAL, RECCO, DROPS) Reports. 
-AIRCAR:  ACARS Aircraft Reports.
-AIRCFT:  Conventional (AIREP, PIREP) and ASDAR Aircraft Reports.
-SATWND:  Satellite-derived Wind Reports.
-PROFLR:  Wind Profiler Reports.
-VADWND:  VAD (NEXRAD) Wind Reports.
-SATBOG:  Satellite Moisture Bogus Reports
-SATEMP:  TOVS Satellite Data (Soundings, Retrievals, Radiances).
-ADPSFC:  Surface Land (Synoptic, Metar) Reports.
-SFCSHP:  Surface Marine (Ship, Buoy, C-man, Platform) Reports.
-SFCBOG:  Mean Sea-Level Pressure Bogus Reports.
-SPSSMI:  SSM/I Retrieval Products (Reprocessed Wind Speed, TPW).
-SYNDAT:  Synthetic Tropical Cyclone Bogus Reports.
-ERS1DA:  ERS Scatterometer Data (Reprocessed Wind Speed).
-GOESND:  Quikscat Scatterometer Data (Reprocessed Wind Speed).
+ADPUPA:  Upper-Air (RAOB, PIBAL, RECCO, DROPS) Reports. <br />
+AIRCAR:  ACARS Aircraft Reports.<br />
+AIRCFT:  Conventional (AIREP, PIREP) and ASDAR Aircraft Reports.<br />
+SATWND:  Satellite-derived Wind Reports.<br />
+PROFLR:  Wind Profiler Reports.<br />
+VADWND:  VAD (NEXRAD) Wind Reports.<br />
+SATBOG:  Satellite Moisture Bogus Reports<br />
+SATEMP:  TOVS Satellite Data (Soundings, Retrievals, Radiances).<br />
+ADPSFC:  Surface Land (Synoptic, Metar) Reports.<br />
+SFCSHP:  Surface Marine (Ship, Buoy, C-man, Platform) Reports.<br />
+SFCBOG:  Mean Sea-Level Pressure Bogus Reports.<br />
+SPSSMI:  SSM/I Retrieval Products (Reprocessed Wind Speed, TPW).<br />
+SYNDAT:  Synthetic Tropical Cyclone Bogus Reports.<br />
+ERS1DA:  ERS Scatterometer Data (Reprocessed Wind Speed).<br />
+GOESND:  Quikscat Scatterometer Data (Reprocessed Wind Speed).<br />
 
 References:
 ================================================================================
@@ -89,33 +89,33 @@ http://www.emc.ncep.noaa.gov/mmb/data_processing/bufrtab_tableb.htm
 
 Output file header definitions:  [unit]
 ================================================================================
-SID = Station ID
-XOB = Lon [DegE]
-YOB = Lat [DegN]
-DHR = Obs time - Cycle time  [Hours]
-ELV = Station Elevation [m]
-TYP = Report Type [code table]
-T29 = Input Report Type [code table]
-ITP = Insturment Type [code table]
-lev = Observation level
-var = Observation variable
-OB  = Observation value
-QM  = quality marker [code table]
-PC  = program code [code table]
-RC  = reason code [code table]
-FC  = forecast value
-AN  = analyzed value
-OE  = observation error
-CAT = PREPBUFR level category [code table]
+SID = Station ID<br />
+XOB = Lon [DegE]<br />
+YOB = Lat [DegN]<br />
+DHR = Obs time - Cycle time  [Hours]<br />
+ELV = Station Elevation [m]<br />
+TYP = Report Type [code table]<br />
+T29 = Input Report Type [code table]<br />
+ITP = Insturment Type [code table]<br />
+lev = Observation level<br />
+var = Observation variable<br />
+OB  = Observation value<br />
+QM  = quality marker [code table]<br />
+PC  = program code [code table]<br />
+RC  = reason code [code table]<br />
+FC  = forecast value<br />
+AN  = analyzed value<br />
+OE  = observation error<br />
+CAT = PREPBUFR level category [code table]<br />
 
 Variables for OB, FC, and AN:
 
-P = Pressure [mb]
-Q = Specific Humidity [MG/KG]
-T = Temp [DEG C]
-Z = Height [m] 
-U = U-wind component [m/s]
-V = V-wind component [m/s] 
+P = Pressure [mb]<br />
+Q = Specific Humidity [MG/KG]<br />
+T = Temp [DEG C]<br />
+Z = Height [m] <br />
+U = U-wind component [m/s]<br />
+V = V-wind component [m/s] <br />
 
 Code Definitions:
 ================================================================================
