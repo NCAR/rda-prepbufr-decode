@@ -211,15 +211,15 @@ c-----7---------------------------------------------------------------72
       found = .false.
 C*    Case lon1 < lon2
       if(lon1 .lt. lon2) then 
-        if ((hdr(3) .ge. lon1) .and. (hdr(3) .le. lon2)) then 
-          if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then
+        if ((hdr(2) .ge. lon1) .and. (hdr(2) .le. lon2)) then 
+          if ((hdr(3) .le. lat1) .and. (hdr(3) .ge. lat2)) then
             found = .true.
           end if
         end if
       else
 C*    Case lon1 > lon2
-        if ((hdr(3) .ge. lon1) .or. (hdr(3) .le. lon2)) then
-          if ((hdr(4) .le. lat1) .and. (hdr(4) .ge. lat2)) then
+        if ((hdr(2) .ge. lon1) .or. (hdr(2) .le. lon2)) then
+          if ((hdr(3) .le. lat1) .and. (hdr(3) .ge. lat2)) then
             found = .true.
           end if
         end if
@@ -307,9 +307,9 @@ cc              end if
           END DO
 
 cc          if (count .lt. 64) then
-cc          if (outstg(72:143) .ne. ' ') then
+          if (outstg(72:143) .ne. ' ') then
             WRITE (UNIT=iuno, FMT='(A200)')  outstg
-cc          endif
+          endif
         END DO  ! End jj = 1, MXR8VN loop
 
       END DO  ! End kk = 1, MXR8VT loop
@@ -343,8 +343,8 @@ C*
 C*      The header array contains the following list of mnemonics:
 C*
 C*         HDR(1)  Station identification (SID)
-C*         HDR(2)  Latitude  (YOB)
-C*         HDR(3)  Longitude (XOB)
+C*         HDR(2)  Longitude (XOB)
+C*         HDR(3)  Latitude  (YOB)
 C*         HDR(4)  Elevation (ELV)
 C*         HDR(5)  Observation time minus cycle time (DHR)
 C*         HDR(6)  PREPBUFR report type (TYP)
