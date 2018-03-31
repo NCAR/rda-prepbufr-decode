@@ -443,7 +443,7 @@ C*
 C*      Read the HDR and EVNS data for the subset that is currently
 C*      being pointed to.
 C*
-        CALL UFBINT  ( lunit, hdr, MXR8PM, 1, jret, head )
+        CALL UFBINT  ( lunit, hdr, NHR8PM, 1, jret, head )
         DO ii = 1, MXR8VT
             CALL UFBEVN  ( lunit, evns ( 1, 1, 1, ii ), MXR8PM, MXR8LV,
      +                     MXR8VN, nlev, ostr (ii) )
@@ -457,7 +457,7 @@ C
             iret = 1
             RETURN
         END IF
-        CALL UFBINT  ( lunit, hdr2, MXR8PM, 1, jret, head )
+        CALL UFBINT  ( lunit, hdr2, NHR8PM, 1, jret, head )
 C 
 C*      Check whether these two subsets have identical SID, YOB, XOB,
 C*      ELV, and DHR values.  If so, then they are matching mass and
