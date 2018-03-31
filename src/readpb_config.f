@@ -150,6 +150,8 @@ c-----7---------------------------------------------------------------72
         STOP
       END IF
 
+      WRITE(6,*) (hdr (ii), ii = 1, 8)
+      
 c-----7---------------------------------------------------------------72
 C*	PREPBUFR data type subsetting filter
 c-----7---------------------------------------------------------------72
@@ -192,7 +194,7 @@ c-----7---------------------------------------------------------------72
       if (ns .gt. 0) then
         k = 1
         found = .false.       
-        write(unit=sid,fmt='(a5)') hdr(2)
+        write(unit=sid,fmt='(a5)') hdr(1)
         do while ((.not. found) .and. (k .le. ns))
           if(sid .eq. said(k)) then
             found = .true.
@@ -295,7 +297,6 @@ C*        Skip virtual temperature at tv_ev_idx
      +           lv, var(kk), 
      +           (evns(ii,lv,jj,kk),ii=1,8)
 
-          write(*,*) "hdr: ", (hdr(ii), ii = 1, 8)
           count=0
           DO mm = 1, 200
             IF (outstg (mm:mm) .eq. '*') THEN
