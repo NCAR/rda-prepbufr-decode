@@ -115,9 +115,8 @@ c-----7---------------------------------------------------------------72
 	        open (unit=iunso(ii), file=trim(outf) // '.' // filo(ii))
             WRITE (UNIT=iunso(ii), FMT=15)
             WRITE (UNIT=iunso(ii), FMT=20)
-     +      'DAT','OB','DHR','SID','XOB','YOB',
-     +      'ELV','TYP','T29','ITP','lev','var',
-     +      'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
+     +      'DHR','SID','XOB','YOB','ELV','TYP','T29','ITP',
+     +      'lev','var','OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
             WRITE (UNIT=iunso(ii), FMT=15)
 	        exit
 	      end if
@@ -128,14 +127,13 @@ c-----7---------------------------------------------------------------72
 	      open (unit=iunso(ii), file=trim(outf) // '.' // filo(ii))
             WRITE (UNIT=iunso(ii), FMT=15)
             WRITE (UNIT=iunso(ii), FMT=20)
-     +      'DAT','OB','DHR','SID','XOB','YOB',
-     +      'ELV','TYP','T29','ITP','lev','var',
-     +      'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
+     +      'DHR','SID','XOB','YOB','ELV','TYP','T29','ITP',
+     +      'lev','var','OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
             WRITE (UNIT=iunso(ii), FMT=15)
 	    end do	  
 	  end if
-  15  FORMAT ("#", 156("-"))
-  20  FORMAT ("#",a7,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
+  15  FORMAT ("#", 144("-"))
+  20  FORMAT ("#",a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
 	  
 c-----7---------------------------------------------------------------72
 C*    Open the PREPBUFR input file
@@ -177,7 +175,6 @@ c-----7---------------------------------------------------------------72
         k = 1
         found = .false.
         do while ((.not. found) .and. (k .le. nplat))
-          print *,"PLATFORM: ",hdr(7)," ",plat(k)
           if(hdr(7) .eq. plat(k)) then
             found = .true.
           else
@@ -197,7 +194,6 @@ c-----7---------------------------------------------------------------72
         found = .false.       
         write(unit=sid,fmt='(a5)') hdr(2)
         do while ((.not. found) .and. (k .le. ns))
-          print *,"STATION ID: ",sid," ",said(k)
           if(sid .eq. said(k)) then
             found = .true.
           else
@@ -249,9 +245,8 @@ c-----7---------------------------------------------------------------72
 	    GO TO 10
 	  END IF
 
-c-----7---------------------------------------------------------------72  
-      write (unit=idatec, fmt='(i10)') idate
-
+c-----7---------------------------------------------------------------72
+c     Loop through the event data array EVNS
 c-----7---------------------------------------------------------------72
       DO lv = 1, nlev
       DO kk = 1, MXR8VT
@@ -296,7 +291,6 @@ C*        Skip virtual temperature at tv_ev_idx
             cycle
           endif
           WRITE (UNIT=outstg, FMT=500)
-     +           idatec(1:8),idatec(9:10),
      +           (hdr (ii), ii = 1, 8),
      +           lv, var(kk), 
      +           (evns(ii,lv,jj,kk),ii=1,8)
@@ -325,8 +319,8 @@ c-----7---------------------------------------------------------------72
       END IF
         
 C*    Format specifier for outstg
-  500 FORMAT (a8,1x,a2,1x, F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,
-     + 1X, F7.1, 1X, F6.1, I4, 1X, A5, 8(1X,F8.1))
+  500 FORMAT (a8,1x,2F7.2,1X,F8.1,F6.3,F8.1,F7.1,F6.1,
+     +        I4,1X,A5,8(1X,F8.1))
 C* 
       END
 
@@ -346,7 +340,14 @@ C*      QOB, TOB, ZOB, UOB, and VOB for the report.
 C*
 C*      The header array contains the following list of mnemonics:
 C*
-C*      DHR SID XOB YOB ELV TYP T29 ITP
+C*         HDR(1)  Station identification (SID)
+C*         HDR(2)  Latitude  (YOB)
+C*         HDR(3)  Longitude (XOB)
+C*         HDR(4)  Elevation (ELV)
+C*         HDR(5)  Observation time minus cycle time (DHR)
+C*         HDR(6)  PREPBUFR report type (TYP)
+C*         HDR(7) Input report type (T29)
+C*         HDR(8) Instrument type (ITP)
 C*
 C*      The 4-D array of data, EVNS ( ii, lv, jj, kk ), is indexed
 C*      as follows:
@@ -361,14 +362,20 @@ C*          6) ANalysed value     (e.g., PAN, ZAN, UAN, VAN, TAN, QAN, PWA)
 C*          7) Observation Error  (e.g., POE, ZOE, WOE, TOE, QOE, PWO)
 C*          8) PREPBUFR data level category (CAT)
 C*      "lv" indexes the levels of the report
+C*          1) Lowest level
 C*      "jj" indexes the event stacks
+C*          1) N'th event
+C*          2) (N-1)'th event (if present)
+C*          3) (N-2)'th event (if present)
+C*                ...
+C*         10) (N-9)'th event (if present)
 C*      "kk" indexes the variable types
-C           1) Pressure
-C           2) Specific humidity
-C           3) Temperature
-C           4) Height
-C           5) U-component wind
-C           6) V-component wind
+C*          1) Pressure
+C*          2) Specific humidity
+C*          3) Temperature
+C*          4) Height
+C*          5) U-component wind
+C*          6) V-component wind
 C*
 C*      Note that the structure of this array is identical to one
 C*      returned from UFBEVN, with an additional (4th) dimension to
@@ -389,7 +396,7 @@ C*
    
         CHARACTER*(MXSTRL)      ostr ( MXR8VT ) 
        
-        DATA head  / 'DHR SID XOB YOB ELV TYP T29 ITP' /
+        DATA head  / 'SID XOB YOB ELV DHR TYP T29 ITP' /
 C*
 
         DATA ostr / 'POB PQM PPC PRC PFC PAN POE CAT',
