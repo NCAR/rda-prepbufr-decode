@@ -1,7 +1,7 @@
       REAL*8    R8BFMS
       PARAMETER ( R8BFMS = 10.0E10 )  ! "Missing" value for BUFR data
       PARAMETER ( NHR8PM = 8 )   ! Actual number of BUFR parameters in header
-      PARAMETER ( MXR8PM = 8 )    ! Maximum number of BUFR parameters
+      PARAMETER ( MXR8PM = 10 )    ! Maximum number of BUFR parameters
       PARAMETER ( MXR8LV = 400 )  ! Maximum number of BUFR levels
       PARAMETER ( MXR8VN = 10 )   ! Maximum number of BUFR event sequences
       PARAMETER ( MXR8VT = 6 )    ! Maximum number of BUFR variable types
