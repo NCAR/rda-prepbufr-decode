@@ -115,7 +115,7 @@ c-----7---------------------------------------------------------------72
 	        open (unit=iunso(ii), file=trim(outf) // '.' // filo(ii))
             WRITE (UNIT=iunso(ii), FMT=15)
             WRITE (UNIT=iunso(ii), FMT=20)
-     +      'DHR','SID','XOB','YOB','ELV','TYP','T29','ITP',
+     +      'SID','XOB','YOB','ELV','DHR','TYP','T29','ITP',
      +      'lev','var','OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
             WRITE (UNIT=iunso(ii), FMT=15)
 	        exit
@@ -127,7 +127,7 @@ c-----7---------------------------------------------------------------72
 	      open (unit=iunso(ii), file=trim(outf) // '.' // filo(ii))
             WRITE (UNIT=iunso(ii), FMT=15)
             WRITE (UNIT=iunso(ii), FMT=20)
-     +      'DHR','SID','XOB','YOB','ELV','TYP','T29','ITP',
+     +      'SID','XOB','YOB','ELV','DHR','TYP','T29','ITP',
      +      'lev','var','OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
             WRITE (UNIT=iunso(ii), FMT=15)
 	    end do	  
@@ -319,8 +319,8 @@ c-----7---------------------------------------------------------------72
       END IF
         
 C*    Format specifier for outstg
-  500 FORMAT (a8,1x,2F7.2,1X,F8.1,F6.3,F8.1,F7.1,F6.1,
-     +        I4,1X,A5,8(1X,F8.1))
+  500 FORMAT (A8, 1X, 2F7.2, 1X, F8.1, 1X, F7.3, 1X, F8.1, 1X, F7.1, 
+     + 1X, F6.1, 1X, I4, 1X, A5, 8(1X,F8.1))
 C* 
       END
 
@@ -398,7 +398,6 @@ C*
        
         DATA head  / 'SID XOB YOB ELV DHR TYP T29 ITP' /
 C*
-
         DATA ostr / 'POB PQM PPC PRC PFC PAN POE CAT',
      +              'QOB QQM QPC QRC QFC QAN QOE CAT',
      +              'TOB TQM TPC TRC TFC TAN TOE CAT',
@@ -406,7 +405,7 @@ C*
      +              'UOB WQM WPC WRC UFC UAN WOE CAT',
      +              'VOB WQM WPC WRC VFC VAN WOE CAT'  /
 C*
-        REAL*8          hdr2 ( MXR8PM ),
+        REAL*8          hdr2 ( NHR8PM ),
      +                  evns2 ( MXR8PM, MXR8LV, MXR8VN, MXR8VT )
 C*
         REAL*8          r8sid, r8sid2, pob1, pob2
