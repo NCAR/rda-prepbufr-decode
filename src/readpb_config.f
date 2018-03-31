@@ -206,26 +206,29 @@ c-----7---------------------------------------------------------------72
       end if
  
 c-----7---------------------------------------------------------------72
-c     Longitude/latitude subsetting filters
+c     Longitude/latitude subsetting filters.  This is ignored if
+c     station ID subsetting is selected.
 c-----7---------------------------------------------------------------72
-      found = .false.
-C*    Case lon1 < lon2
-      if(lon1 .lt. lon2) then 
-        if ((hdr(2) .ge. lon1) .and. (hdr(2) .le. lon2)) then 
-          if ((hdr(3) .le. lat1) .and. (hdr(3) .ge. lat2)) then
-            found = .true.
+      if (ns .eq. 0) then
+        found = .false.
+C*      Case lon1 < lon2
+        if(lon1 .lt. lon2) then 
+          if ((hdr(2) .ge. lon1) .and. (hdr(2) .le. lon2)) then 
+            if ((hdr(3) .le. lat1) .and. (hdr(3) .ge. lat2)) then
+              found = .true.
+            end if
+          end if
+        else
+C*      Case lon1 > lon2
+          if ((hdr(2) .ge. lon1) .or. (hdr(2) .le. lon2)) then
+            if ((hdr(3) .le. lat1) .and. (hdr(3) .ge. lat2)) then
+              found = .true.
+            end if
           end if
         end if
-      else
-C*    Case lon1 > lon2
-        if ((hdr(2) .ge. lon1) .or. (hdr(2) .le. lon2)) then
-          if ((hdr(3) .le. lat1) .and. (hdr(3) .ge. lat2)) then
-            found = .true.
-          end if
+        if (.not. found) then
+          go to 10
         end if
-      end if
-      if (.not. found) then
-        go to 10
       end if
 
 c-----7---------------------------------------------------------------72
