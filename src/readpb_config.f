@@ -326,7 +326,7 @@ C*        Skip virtual temperature at tv_ev_idx
           END DO
 
           if (count .lt. 64) then
-            WRITE (UNIT=12, FMT='(A200)')  outstg
+            WRITE (UNIT=iuno, FMT='(A200)')  outstg
           endif
         END DO  ! End jj = 1, MXR8VN loop
 
