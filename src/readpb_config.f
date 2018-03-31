@@ -137,7 +137,7 @@ C*    Print the HDR data for this station report.
 c-----7---------------------------------------------------------------72
 ctac      WRITE (UNIT=12, FMT=15)
 ctac      WRITE (UNIT=12, FMT=20)
-ctac     +    'REP','DAT','OBT','DHR','SID','XOB','YOB',
+ctac     +    'REP','DAT','OB','DHR','SID','XOB','YOB',
 ctac     +    'ELV','TYP','T29','ITP','lev','var',
 ctac     +    'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
 ctac      WRITE (UNIT=12, FMT=15)
@@ -253,7 +253,8 @@ c-----7---------------------------------------------------------------72
 C*	Print the HDR data for this station report.
 c-----7---------------------------------------------------------------72
 	  WRITE  (UNIT=iuno, FMT=300 ) (hdr(ii), ii=1,8)
-  300 FORMAT (A8,1X,2F7.2,1X,F7.3,1X,2F8.1,1X,F7.1,1X,F6.1)
+C  300 FORMAT (A8,1X,2F7.2,1X,F7.3,1X,2F8.1,1X,F7.1,1X,F6.1)
+  300 FORMAT (F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,1X, F7.1, 1X, F6.1)
   
       write (unit=idatec, fmt='(i10)') idate
 
