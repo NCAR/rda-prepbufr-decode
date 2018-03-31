@@ -115,6 +115,12 @@ ctac      OPEN (UNIT=12, FILE=outf)
 	    do ii = 1, NFILO
 	      if (type(kk) .eq. filo(ii)) then
 	        open (unit=iunso(ii), file=trim(outf) // '.' // filo(ii))
+            WRITE (UNIT=iunso(ii), FMT=15)
+            WRITE (UNIT=iunso(ii), FMT=20)
+     +      'DAT','OB','DHR','SID','XOB','YOB',
+     +      'ELV','TYP','T29','ITP','lev','var',
+     +      'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
+            WRITE (UNIT=iunso(ii), FMT=15)
 	        exit
 	      end if
 	    end do
@@ -122,8 +128,16 @@ ctac      OPEN (UNIT=12, FILE=outf)
 	  else
 	    do ii = 1, NFILO
 	      open (unit=iunso(ii), file=trim(outf) // '.' // filo(ii))
+            WRITE (UNIT=iunso(ii), FMT=15)
+            WRITE (UNIT=iunso(ii), FMT=20)
+     +      'DAT','OB','DHR','SID','XOB','YOB',
+     +      'ELV','TYP','T29','ITP','lev','var',
+     +      'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
+            WRITE (UNIT=iunso(ii), FMT=15)
 	    end do	  
 	  end if
+  15  FORMAT ("#", 156("-"))
+  20  FORMAT ("#",a5,a9,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
 	  
 c-----7---------------------------------------------------------------72
 C*    Open the PREPBUFR input file
@@ -131,18 +145,6 @@ c-----7---------------------------------------------------------------72
       OPEN ( UNIT = 11, FILE = inf, FORM = 'UNFORMATTED' )
       CALL OPENBF  ( 11, 'IN', 11 )
       CALL DATELEN  ( 10 )
-
-c-----7---------------------------------------------------------------72
-C*    Print the HDR data for this station report.
-c-----7---------------------------------------------------------------72
-ctac      WRITE (UNIT=12, FMT=15)
-ctac      WRITE (UNIT=12, FMT=20)
-ctac     +    'REP','DAT','OB','DHR','SID','XOB','YOB',
-ctac     +    'ELV','TYP','T29','ITP','lev','var',
-ctac     +    'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
-ctac      WRITE (UNIT=12, FMT=15)
-ctac  15  FORMAT ("#", 162("-"))
-ctac  20  FORMAT ("#",a5,a9,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
 
 c-----7---------------------------------------------------------------72
 C*   Get the next station report from the input file.
@@ -252,19 +254,19 @@ c-----7---------------------------------------------------------------72
 c-----7---------------------------------------------------------------72
 C*	Print the HDR data for this station report.
 c-----7---------------------------------------------------------------72
-	  WRITE  (UNIT=iuno, FMT=300 ) (hdr(ii), ii=1,8)
-C  300 FORMAT (A8,1X,2F7.2,1X,F7.3,1X,2F8.1,1X,F7.1,1X,F6.1)
-  300 FORMAT (F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,1X, F7.1, 1X, F6.1)
+cc	  WRITE  (UNIT=iuno, FMT=300 ) (hdr(ii), ii=1,8)
+Cc  300 FORMAT (A8,1X,2F7.2,1X,F7.3,1X,2F8.1,1X,F7.1,1X,F6.1)
+cc  300 FORMAT (F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,1X, F7.1, 1X, F6.1)
   
       write (unit=idatec, fmt='(i10)') idate
 
 c-----7---------------------------------------------------------------72
       DO lv = 1, nlev
       
-	    WRITE (UNIT=iuno, FMT='(80("-"))')
-	    WRITE (UNIT=iuno, FMT='("lev ", I4, 8A9)')
-     +		lv,'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
-	    WRITE (UNIT=iuno, FMT='(80("-"))')      
+cc	    WRITE (UNIT=iuno, FMT='(80("-"))')
+cc	    WRITE (UNIT=iuno, FMT='("lev ", I4, 8A9)')
+cc     +		lv,'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
+cc	    WRITE (UNIT=iuno, FMT='(80("-"))')      
       
       DO kk = 1, MXR8VT
 
@@ -308,7 +310,7 @@ C*        Skip virtual temperature at tv_ev_idx
             cycle
           endif
           WRITE (UNIT=outstg, FMT=500)
-     +           subset(1:6),idatec(1:8),idatec(9:10),
+     +           idatec(1:8),idatec(9:10),
      +           (hdr (ii), ii = 1, 8),
      +           lv, var(kk), 
      +           (evns(ii,lv,jj,kk),ii=1,8)
@@ -337,7 +339,7 @@ c-----7---------------------------------------------------------------72
       END IF
         
 C*    Format specifier for outstg
-  500 FORMAT (A6,1x,a8,1x,a2,1x, F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,
+  500 FORMAT (a8,1x,a2,1x, F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,
      + 1X, F7.1, 1X, F6.1, I4, 1X, A5, 8(1X,F8.1))
 C* 
       END
