@@ -298,14 +298,15 @@ C*        Skip virtual temperature at tv_ev_idx
           count=0
           DO mm = 1, 200
             IF (outstg (mm:mm) .eq. '*') THEN
-              outstg (mm:mm) = 'm'
-              if(mm .ge. 85) then
-                count=count+1
-              end if
+              outstg (mm:mm) = ' '
+cc              if(mm .ge. 72) then
+cc                count=count+1
+cc              end if
             END IF
           END DO
 
-          if (count .lt. 64) then
+cc          if (count .lt. 64) then
+          if (outstg(72:143) .ne. ' ') then
             WRITE (UNIT=iuno, FMT='(A200)')  outstg
           endif
         END DO  ! End jj = 1, MXR8VN loop
