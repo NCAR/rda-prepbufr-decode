@@ -133,7 +133,7 @@ c-----7---------------------------------------------------------------72
 	    end do	  
 	  end if
   15  FORMAT ("#", 144("-"))
-  20  FORMAT ("#",a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
+  20  FORMAT ("#",a4,a11,a7,a9,a8,a9,a8,a7,a5,8a9)
 	  
 c-----7---------------------------------------------------------------72
 C*    Open the PREPBUFR input file
@@ -301,14 +301,14 @@ C*        Skip virtual temperature at tv_ev_idx
           DO mm = 1, 200
             IF (outstg (mm:mm) .eq. '*') THEN
               outstg (mm:mm) = ' '
-cc              if(mm .ge. 72) then
+cc              if(mm .ge. 77) then
 cc                count=count+1
 cc              end if
             END IF
           END DO
 
 cc          if (count .lt. 64) then
-          if (outstg(72:143) .ne. ' ') then
+          if (outstg(77:137) .ne. ' ') then
             WRITE (UNIT=iuno, FMT='(A200)')  outstg
           endif
         END DO  ! End jj = 1, MXR8VN loop
