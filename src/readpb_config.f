@@ -114,14 +114,14 @@ ctac      OPEN (UNIT=12, FILE=outf)
 	    do kk = 1, nt
 	    do ii = 1, NFILO
 	      if (type(kk) .eq. filo(ii)) then
-	        open (unit=iunso(ii), file=outf // '.' // filo(ii))
+	        open (unit=iunso(ii), file=trim(outf) // '.' // filo(ii))
 	        exit
 	      end if
 	    end do
 	    end do
 	  else
 	    do ii = 1, NFILO
-	      open (unit=iunso(ii), file=outf // '.' // filo(ii))
+	      open (unit=iunso(ii), file=trim(outf) // '.' // filo(ii))
 	    end do	  
 	  end if
 	  
