@@ -108,8 +108,6 @@ c*	open the configuration file
 c-----7---------------------------------------------------------------72
 C*    Open the output file(s)
 c-----7---------------------------------------------------------------72
-ctac      OPEN (UNIT=12, FILE=outf)
-	  
 	  if(nt .gt. 0) then
 	    do kk = 1, nt
 	    do ii = 1, NFILO
@@ -251,23 +249,11 @@ c-----7---------------------------------------------------------------72
 	    GO TO 10
 	  END IF
 
-c-----7---------------------------------------------------------------72
-C*	Print the HDR data for this station report.
-c-----7---------------------------------------------------------------72
-cc	  WRITE  (UNIT=iuno, FMT=300 ) (hdr(ii), ii=1,8)
-Cc  300 FORMAT (A8,1X,2F7.2,1X,F7.3,1X,2F8.1,1X,F7.1,1X,F6.1)
-cc  300 FORMAT (F6.3, 1x, a8, 1x,2F7.2, 1X, 2F8.1,1X, F7.1, 1X, F6.1)
-  
+c-----7---------------------------------------------------------------72  
       write (unit=idatec, fmt='(i10)') idate
 
 c-----7---------------------------------------------------------------72
       DO lv = 1, nlev
-      
-cc	    WRITE (UNIT=iuno, FMT='(80("-"))')
-cc	    WRITE (UNIT=iuno, FMT='("lev ", I4, 8A9)')
-cc     +		lv,'OB','QM', 'PC', 'RC', 'FC','AN','OE','CAT'
-cc	    WRITE (UNIT=iuno, FMT='(80("-"))')      
-      
       DO kk = 1, MXR8VT
 
 c-----7---------------------------------------------------------------72
@@ -360,7 +346,7 @@ C*      QOB, TOB, ZOB, UOB, and VOB for the report.
 C*
 C*      The header array contains the following list of mnemonics:
 C*
-C*      SID XOB YOB DHR ELV TYP T29 ITP
+C*      DHR SID XOB YOB ELV TYP T29 ITP
 C*
 C*      The 4-D array of data, EVNS ( ii, lv, jj, kk ), is indexed
 C*      as follows:
