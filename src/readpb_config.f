@@ -6,7 +6,7 @@
       parameter	(maxparm=5)
       parameter	(maxsaid=15)
 C*
-      CHARACTER  outstg*(200), subset*8, 
+      CHARACTER  outstg*(150), subset*8, 
      +           inf*300, outf*300, config*300, argv*300,
      +           crec*101, type(maxtype)*6,
      +  		 parm(maxparm),id*4,idatec*10,
@@ -40,10 +40,6 @@ C*
 
 C*
 C-----------------------------------------------------------------------
-C
-C*      Open the input file.
-C*      Open the BUFR messages file.
-
 C*      Input arguments:
 C*      1. PREPBUFR input file (path + file name)
 C*      2. output file (path + file name)
@@ -101,10 +97,6 @@ c*	open the configuration file
         end select
       end do
 
-      print *,"ns = ",ns
-      print*, "np = ",np
-      print*, "nt = ",nt
-      print*, "nplat = ",nplat
 c-----7---------------------------------------------------------------72
 C*    Open the output file(s)
 c-----7---------------------------------------------------------------72
@@ -284,8 +276,8 @@ c-----7---------------------------------------------------------------72
         end if
                 
 c-----7---------------------------------------------------------------72                
-C*    Print the EVNS data for this station report.
-c     Write PREPBUFR message to output file
+C*    Write the header and EVNS data for this station report to the
+C*    output file.
 c-----7---------------------------------------------------------------72
 
         DO jj = 1, MXR8VN
@@ -298,22 +290,15 @@ C*        Skip virtual temperature at tv_ev_idx
      +           lv, var(kk), 
      +           (evns(ii,lv,jj,kk),ii=1,8)
 
-          count=0
-          DO mm = 1, 200
+          DO mm = 1, 150
             IF (outstg (mm:mm) .eq. '*') THEN
               outstg (mm:mm) = ' '
-cc              if(mm .ge. 77) then
-cc                count=count+1
-cc              end if
             END IF
           END DO
-
-cc          if (count .lt. 64) then
           if (outstg(77:137) .ne. ' ') then
-            WRITE (UNIT=iuno, FMT='(A200)')  outstg
+            WRITE (UNIT=iuno, FMT='(A150)')  outstg
           endif
         END DO  ! End jj = 1, MXR8VN loop
-
       END DO  ! End kk = 1, MXR8VT loop
       END DO  ! End lv = 1, nlev loop
 
@@ -326,6 +311,7 @@ C*    Format specifier for outstg
   500 FORMAT (A8, 1X, 2F7.2, 1X, F8.1, 1X, F7.3, 1X, F8.1, 1X, F7.1, 
      + 1X, F6.1, 1X, I4, 1X, A5, 8(1X,F8.1))
 C* 
+      STOP
       END
 
 C-----------------------------------------------------------------------
