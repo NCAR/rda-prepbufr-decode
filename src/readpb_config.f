@@ -137,7 +137,7 @@ ctac      OPEN (UNIT=12, FILE=outf)
 	    end do	  
 	  end if
   15  FORMAT ("#", 156("-"))
-  20  FORMAT ("#",a5,a9,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
+  20  FORMAT ("#",a7,a3,a7,a6,a11,a7,a9,a8,a8,a7,a4,a6,8a9)
 	  
 c-----7---------------------------------------------------------------72
 C*    Open the PREPBUFR input file
@@ -315,11 +315,11 @@ C*        Skip virtual temperature at tv_ev_idx
      +           lv, var(kk), 
      +           (evns(ii,lv,jj,kk),ii=1,8)
 
-          count=1
+          count=0
           DO mm = 1, 200
             IF (outstg (mm:mm) .eq. '*') THEN
               outstg (mm:mm) = 'm'
-              if(mm .ge. 93) then
+              if(mm .ge. 85) then
                 count=count+1
               end if
             END IF
