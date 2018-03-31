@@ -306,9 +306,9 @@ cc              end if
           END DO
 
 cc          if (count .lt. 64) then
-          if (outstg(72:143) .ne. ' ') then
+cc          if (outstg(72:143) .ne. ' ') then
             WRITE (UNIT=iuno, FMT='(A200)')  outstg
-          endif
+cc          endif
         END DO  ! End jj = 1, MXR8VN loop
 
       END DO  ! End kk = 1, MXR8VT loop
