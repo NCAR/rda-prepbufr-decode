@@ -138,9 +138,8 @@ c-----7---------------------------------------------------------------72
 C*   Get the next station report from the input file.
 c-----7---------------------------------------------------------------72
   10  CALL READPB  ( 11, subset, idate, ierrpb )
-      WRITE(6,*) "READPB idate, ierr: ",idate,ierrpb
       IF ( ierrpb .eq. -1 )  THEN
-        WRITE(6,*) "All reports have been read. Exiting."
+        WRITE(6,*) '1-All subsets read in and processed. Exiting.'
         STOP
       END IF
 
@@ -157,7 +156,7 @@ c-----7---------------------------------------------------------------72
             k = k + 1
           end if
         end do
-        if (.not. found) then
+	    if ((.not. found) .and. (ierrpb .eq. 0)) then
           go to 10
         end if
       end if
@@ -175,7 +174,7 @@ c-----7---------------------------------------------------------------72
             k = k + 1
           end if
         end do
-        if (.not. found) then
+	    if ((.not. found) .and. (ierrpb .eq. 0)) then
           go to 10
         end if
       end if
@@ -194,7 +193,7 @@ c-----7---------------------------------------------------------------72
             k = k + 1
           end if
         end do
-        if (.not. found) then
+	    if ((.not. found) .and. (ierrpb .eq. 0)) then
           go to 10
         end if
       end if
@@ -220,7 +219,7 @@ C*      Case lon1 > lon2
             end if
           end if
         end if
-        if (.not. found) then
+	    if ((.not. found) .and. (ierrpb .eq. 0)) then
           go to 10
         end if
       end if
@@ -308,6 +307,8 @@ c-----7---------------------------------------------------------------72
       IF  ( ierrpb .eq. 0 )  THEN
         GO TO 10
       END IF
+
+      WRITE(6,*) '2-All subsets read in and processed. End of program'
         
 C*    Format specifier for outstg
   500 FORMAT (A8, 1X, 2F7.2, 1X, F8.1, 1X, F7.3, 1X, F8.1, 1X, F7.1, 
