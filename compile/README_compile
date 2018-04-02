@@ -1,5 +1,0 @@
-ifort -c readpb_config.f
-
-# yellowstone/geyser
-ifort -o readpb_config.x readpb_config.o /glade/apps/opt/BUFRLIB/11.0.0/intel/12.1.5/lib/libbufr.a
-
