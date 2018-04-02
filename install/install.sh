@@ -12,7 +12,7 @@ EXE=../exe
 # LIB = Path to BUFRLIB.  Library available at 
 #      http://www.nco.ncep.noaa.gov/sib/decoders/BUFRLIB/
 
-LIB=/glade/apps/opt/BUFRLIB/11.0.0/intel/12.1.5/lib  # path to BUFRLIB
+LIB=/glade/apps/opt/BUFRLIB/11.0.0/intel/12.1.5/lib
 
 # Path to fortran compiler
 fflag=""
