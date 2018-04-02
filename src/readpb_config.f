@@ -139,7 +139,7 @@ C*   Get the next station report from the input file.
 c-----7---------------------------------------------------------------72
   10  CALL READPB  ( 11, subset, idate, ierrpb )
       IF ( ierrpb .eq. -1 )  THEN
-        WRITE(6,*) '1-All subsets read in and processed. Exiting.'
+        WRITE(6,*) 'All subsets read in and processed. Exiting.'
         STOP
       END IF
 
@@ -159,6 +159,11 @@ c-----7---------------------------------------------------------------72
 	    if ((.not. found) .and. (ierrpb .eq. 0)) then
           go to 10
         end if
+c       End program if no subset match found and we are processing
+c       the last report in the prepbufr file (ierrpb = 1)
+        if ((.not. found) .and. (ierrpb .eq. 1)) then
+          go to 9998
+        end if
       end if
 
 c-----7---------------------------------------------------------------72
@@ -176,6 +181,11 @@ c-----7---------------------------------------------------------------72
         end do
 	    if ((.not. found) .and. (ierrpb .eq. 0)) then
           go to 10
+        end if
+c       End program if no subset match found and we are processing
+c       the last report in the prepbufr file (ierrpb = 1)
+        if ((.not. found) .and. (ierrpb .eq. 1)) then
+          go to 9998
         end if
       end if
 
@@ -195,6 +205,11 @@ c-----7---------------------------------------------------------------72
         end do
 	    if ((.not. found) .and. (ierrpb .eq. 0)) then
           go to 10
+        end if
+c       End program if no subset match found and we are processing
+c       the last report in the prepbufr file (ierrpb = 1)
+        if ((.not. found) .and. (ierrpb .eq. 1)) then
+          go to 9998
         end if
       end if
  
@@ -222,8 +237,13 @@ C*      Case lon1 > lon2
 	    if ((.not. found) .and. (ierrpb .eq. 0)) then
           go to 10
         end if
+c       End program if no subset match found and we are processing
+c       the last report in the prepbufr file (ierrpb = 1)
+        if ((.not. found) .and. (ierrpb .eq. 1)) then
+          go to 9998
+        end if
       end if
-
+      
 c-----7---------------------------------------------------------------72
 C*	Set the appropriate output file unit number.
 c-----7---------------------------------------------------------------72
@@ -308,7 +328,8 @@ c-----7---------------------------------------------------------------72
         GO TO 10
       END IF
 
-      WRITE(6,*) '2-All subsets read in and processed. End of program'
+ 9998 CONTINUE
+      WRITE(6,*) 'All subsets read in and processed. End of program.'
         
 C*    Format specifier for outstg
   500 FORMAT (A8, 1X, 2F7.2, 1X, F8.1, 1X, F7.3, 1X, F8.1, 1X, F7.1, 
