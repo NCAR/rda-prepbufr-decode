@@ -40,15 +40,20 @@ atmospheric variables from PREPBUFR files into simple text
 files.  The PREPBUFR files are archived in the RDA ds337.0.
 
 To compile the PREPBUFR libraries and extraction code, go to the 
-install directory.  Set the CPLAT variable in the install.sh 
-script to reflect the correct platform.  Currently CPLAT=sun.
-Execute the install.sh script to complete the compilations.
+install directory. Execute the install.sh script to complete the 
+compilation.
 
 The executable will be placed in the exe directory.  
-(exe/readpb.x:  program used to extract data from PREPBUFR files)
-Execute the executable and enter the PREPBUFR input file name to extract
-the basic meteorlogical varibles into text format.  Output text
-files corresponding to respective MNEMONICS will be generated.
+(exe/readpb_config.x:  program used to extract data from PREPBUFR files)
+The command syntax to run the executable is as follows:
+
+<code>
+readpb_config.x prepbufr.in prepbufr.out config_file
+</code>
+
+where 'prepbufr.in' is the input PREPBUFR file, 'prepbufr.out' is 
+the output ASCII file, and config_file is the configuration file 
+passed into readpb_config.x.
 
 Definitions for output file MNEMONICS:
 ================================================================================
