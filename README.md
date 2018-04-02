@@ -47,9 +47,11 @@ The executable will be placed in the exe directory.
 (exe/readpb_config.x:  program used to extract data from PREPBUFR files)
 The command syntax to run the executable is as follows:
 
+<pre>
 <code>
 readpb_config.x prepbufr.in prepbufr.out config_file
 </code>
+</pre>
 
 where 'prepbufr.in' is the input PREPBUFR file, 'prepbufr.out' is 
 the output ASCII file, and config_file is the configuration file 
