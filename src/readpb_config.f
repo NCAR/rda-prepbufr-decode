@@ -138,7 +138,9 @@ c-----7---------------------------------------------------------------72
 C*   Get the next station report from the input file.
 c-----7---------------------------------------------------------------72
   10  CALL READPB  ( 11, subset, idate, ierrpb )
+      WRITE(6,*) "READPB idate, ierr: ",idate,ierrpb
       IF ( ierrpb .eq. -1 )  THEN
+        WRITE(6,*) "All reports have been read. Exiting."
         STOP
       END IF
 
