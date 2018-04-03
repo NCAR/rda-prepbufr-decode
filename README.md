@@ -98,6 +98,9 @@ http://www.emc.ncep.noaa.gov/mmb/data_processing/prepbufr.doc/table_1.htm.
 Definitions for general BUFR MNEMONIC headers can be found at:
 http://www.emc.ncep.noaa.gov/mmb/data_processing/bufrtab_tableb.htm.
 
+The BUFRLIB software and user guide is available at:
+http://www.nco.ncep.noaa.gov/sib/decoders/BUFRLIB/.
+
 
 Output file header definitions:  [unit]
 ================================================================================
