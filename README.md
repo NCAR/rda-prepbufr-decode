@@ -89,19 +89,14 @@ GOESND:  Quikscat Scatterometer Data (Reprocessed Wind Speed).
 References:
 ================================================================================
 
-A guide to the PREPBUFR libraries can be found at:
-http://www.ncep.noaa.gov/NCO/DMQAB/Decoders/BUFRLIB/
+A description of PREPBUFR processing at NCEP can be found at:
+http://www.emc.ncep.noaa.gov/mmb/data_processing/prepbufr.doc/document.htm.
 
 Definitions for PREPBUFR MNEMONIC headers and some code tables can be found at:
-http://www.emc.ncep.noaa.gov/mmb/data_processing/prepbufr.doc/table_1.htm
-and
-http://www.ncep.noaa.gov/NCO/DMQAB/Decoders/BUFRLIB/prepbufr_bftab.html
-
-A description of PREPBUFR processing at NCEP can be found at:
-http://www.emc.ncep.noaa.gov/mmb/data_processing/prepbufr.doc/document.htm
+http://www.emc.ncep.noaa.gov/mmb/data_processing/prepbufr.doc/table_1.htm.
 
 Definitions for general BUFR MNEMONIC headers can be found at:
-http://www.emc.ncep.noaa.gov/mmb/data_processing/bufrtab_tableb.htm
+http://www.emc.ncep.noaa.gov/mmb/data_processing/bufrtab_tableb.htm.
 
 
 Output file header definitions:  [unit]
