@@ -1,7 +1,14 @@
 # rda-prepbufr-decode
-Fortran source code to read PrepBUFR files and dump output in ASCII format.  
+This project contains Fortran source code to read NCEP PrepBUFR files and dump 
+output in ASCII format.  The executable produced by this code accepts a configuration
+file as a command line argument, which allows users to extract subsets from the
+PREPBUFR files based on subsetting parameters defined in the configuration file.
+
 For more information, see the RDA PrepBUFR dataset archive at 
 http://rda.ucar.edu/datasets/ds337.0.
+
+The Github repository for this source code is available at 
+https://github.com/NCAR/rda-prepbufr-decode.
 
 Background on PREPBUFR processing and files:
 ==================================================================================
@@ -37,7 +44,8 @@ Description and instructions to use the included extraction program:
 
 The included program can be used to extract general 
 atmospheric variables from PREPBUFR files into simple text 
-files.  The PREPBUFR files are archived in the RDA ds337.0.
+files.  The PREPBUFR files are archived in the RDA dataset
+ds337.0.
 
 To compile the PREPBUFR libraries and extraction code, go to the 
 install directory. Execute the install.sh script to complete the 
@@ -55,7 +63,8 @@ readpb_config.x prepbufr.in prepbufr.out config_file
 
 where 'prepbufr.in' is the input PREPBUFR file, 'prepbufr.out' is 
 the output ASCII file, and config_file is the configuration file 
-passed into readpb_config.x.
+passed into readpb_config.x.  An example template for the configuration
+file is located in the 'config' directory.
 
 Definitions for output file MNEMONICS:
 ================================================================================
