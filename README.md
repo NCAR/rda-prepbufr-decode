@@ -164,8 +164,8 @@ Code Definitions:
 Quality Control Events Stack:
 ================================================================================
 
--The first value of a variable in the column is the one used for reanalysis
- processing (QC'd obs value), if the variable is not rejected.
+-The first value of a variable in the column is the one used for data 
+ assimilation processing (QC'd obs value), if the variable is not rejected.
 
 -The following values of the same variable (e.g. the second Q value to 
  show up in the column) have one less layer of QC processing.
@@ -175,7 +175,7 @@ Quality Control Events Stack:
 -There may be several steps of QC, and several corresponding values.
 
 -A quality marker(qm) value > 3 indicates that the observation has been
- rejected for use in reanalysis processing. 
+ rejected for use in data assimilation processing. 
 
 A note regarding virtual temperature processing:
 ================================================================================
