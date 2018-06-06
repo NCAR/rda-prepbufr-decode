@@ -10,7 +10,9 @@ C*
      +           inf*300, outf*300, config*300, argv*300,
      +           crec*101, type(maxtype)*6,
      +  		 parm(maxparm),id*4,idatec*10,
-     +           said(maxsaid)*5,sid*5	
+     +           said(maxsaid)*5,sid*5,vtmp*5
+     
+      LOGICAL skip_vtmp
  
 C*
       INTEGER    plat(maxplat)
@@ -94,6 +96,15 @@ c*	open the configuration file
             nplat=inlength/4
             read (crec,*) id,(plat(j), j=1,nplat)
             print *,"Reporting platforms: ",(plat(j)," ", j=1,nplat)
+          case ("VTMP")
+            read (crec,*) id,vtmp
+            if (vtmp .eq. "FALSE") then
+               print *,"*** Skipping virtual temperature ***"
+               skip_vtmp = .true.
+            else
+               print *,"*** Retaining virtual temperature ***"
+               skip_vtmp = .false.
+            end if
         end select
       end do
 
@@ -289,7 +300,7 @@ c-----7---------------------------------------------------------------72
 c   Check for virtual temperature
 c-----7---------------------------------------------------------------72
         tvflag=1
-        if (var(kk) .eq. 'T') then
+        if ((var(kk) .eq. 'T') .and. (skip_vtmp)) then
           call virtmp(lv, kk, tv_ev_idx, tvflag)
           if (tvflag .eq. -1) then
             cycle
