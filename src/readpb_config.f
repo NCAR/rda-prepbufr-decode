@@ -62,6 +62,9 @@ C*      3. configuration file (path + file name)
       lon2=360.0
       lat1=90.0
       lat2=-90.0
+      
+c* Omit virtual temperature in output (default)
+      skip_vtmp = .false.
 
       print*, "infile = ",inf
       print*, "outfile = ",outf
