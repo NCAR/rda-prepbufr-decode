@@ -5,7 +5,7 @@ file as a command line argument, which allows users to extract subsets from the
 PREPBUFR files based on subsetting parameters defined in the configuration file.
 
 For more information, see the RDA PrepBUFR dataset archive at 
-http://rda.ucar.edu/datasets/ds337.0.
+https://rda.ucar.edu/datasets/ds337.0.
 
 The Github repository for this source code is available at 
 https://github.com/NCAR/rda-prepbufr-decode.
