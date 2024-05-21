@@ -20,7 +20,7 @@ LIB=/path/to/bufrlib/lib/directory
 
 # Path to fortran compiler (Intel)
 fflag=""
-FC=/glade/apps/opt/cmpwrappers/ifort
+FC=/path/to/fortran/compiler/ifort
 
 #  Compile the decode program
 #  ---------------------------------------
