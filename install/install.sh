@@ -18,7 +18,7 @@ mkdir -p $EXE
 # Replace LIB path with the path to BUFRLIB on your local system
 LIB=/path/to/bufrlib/lib/directory
 
-# Path to fortran compiler (Intel)
+# Path to fortran compiler
 fflag=""
 FC=/path/to/fortran/compiler/ifort
 
@@ -32,7 +32,7 @@ $FC $fflag -c $SRC/readpb_config.f
 #  -----------------------------
 
 echo "Linking ..."
-$FC $fflag -o $EXE/readpb_config.x readpb_config.o $LIB/libbufr.a
+$FC $fflag -o $EXE/readpb_config.x readpb_config.o $LIB/libbufr_4.a
 
 #  clean up
 #  --------
