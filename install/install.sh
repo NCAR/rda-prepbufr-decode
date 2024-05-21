@@ -9,12 +9,16 @@ set -eua
 SRC=../src
 EXE=../exe
 
-# LIB = Path to BUFRLIB.  Library available at 
-#      http://www.nco.ncep.noaa.gov/sib/decoders/BUFRLIB/
+# create /exe directory if it doesn't exist yet
+mkdir -p $EXE
 
-LIB=/glade/apps/opt/BUFRLIB/11.0.0/intel/12.1.5/lib
+# LIB = Path to BUFRLIB.  Library and documentation available at 
+#    https://emc.ncep.noaa.gov/emc/pages/infrastructure/bufrlib.php
+# 
+# Replace LIB path with the path to BUFRLIB on your local system
+LIB=/path/to/bufrlib/lib/directory
 
-# Path to fortran compiler
+# Path to fortran compiler (Intel)
 fflag=""
 FC=/glade/apps/opt/cmpwrappers/ifort
 
